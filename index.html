@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+
+<html lang="tr">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
+<meta content="#030915" name="theme-color"/>
+<meta content="yes" name="mobile-web-app-capable"/>
+<title>Yavrumun Özel Günü</title>
+<link href="manifest.webmanifest" rel="manifest"/>
+<link href="style.css" rel="stylesheet"/>
+</head>
+<body class="password-locked">
+<section class="password-gate" id="passwordGate" aria-label="Şifre ekranı">
+  <div class="password-glow password-glow-a"></div>
+  <div class="password-glow password-glow-b"></div>
+  <div class="password-card">
+    <div class="password-lock" id="passwordLock" aria-hidden="true"><span class="lock-closed">🔒</span><span class="lock-open">🔓</span></div>
+    <p class="password-kicker">Hayatıma Özel</p>
+    <h1>Yavrumun<br><em>Özel Günü</em></h1>
+    <p class="password-copy">Bu uygulamayı senin için hazırladım. 🤍</p>
+    <p class="password-copy">Ama açabilmek için küçük bir şartım var.</p>
+    <p class="password-direct">Şifreyi benden alman gerekiyor.<br><strong>Bana yaz ya da ara, şifreyi söyleyeceğim. 💙</strong></p>
+    <form class="password-form" id="passwordForm" autocomplete="off">
+      <label for="passwordInput">Şifre</label>
+      <div class="password-input-wrap">
+        <input id="passwordInput" name="password" type="password" inputmode="numeric" pattern="[0-9]*" maxlength="4" placeholder="••••" aria-describedby="passwordMessage" autocomplete="one-time-code" />
+        <button class="password-eye" id="passwordEye" type="button" aria-label="Şifreyi göster">◉</button>
+      </div>
+      <button class="password-submit" type="submit"><span>Uygulamayı Aç</span><b>♡</b></button>
+      <p class="password-message" id="passwordMessage" aria-live="polite"></p>
+    </form>
+  </div>
+  <div class="password-success" id="passwordSuccess" aria-hidden="true">
+    <div class="success-lock">🔓</div>
+    <h2><span>Hoş geldin</span><strong>Doğum günü kızı</strong></h2>
+    <p>Şimdi asıl sürpriz başlıyor.</p>
+  </div>
+</section>
+
+<canvas id="stars"></canvas>
+<div class="ambient a1"></div><div class="ambient a2"></div>
+<section class="gate" id="gate">
+<div aria-label="Şevval'in çocukluk fotoğrafı" class="gate-photo">
+<img alt="Şevval'in çocukluk fotoğrafı" src="assets/photos/01-cocukluk.webp"/>
+</div>
+<div aria-hidden="true" class="lily-scene realistic-lily left"><img src="assets/pinterest-pink-lily.webp" alt=""></div>
+<div aria-hidden="true" class="lily-scene realistic-lily right"><img src="assets/pinterest-pink-lily.webp" alt=""></div>
+<div class="gate-inner">
+<p class="eyebrow">FURKAN'DAN ŞEVVAL'E</p>
+<h1>Yavrumun<br/><em>Özel Günü</em></h1>
+<div class="date-pill"><span>28</span><small>AĞUSTOS</small></div>
+<p class="gate-copy">Çok merak ettiğin sürpriz<br/><strong>işte geldi.</strong></p>
+<button class="primary-btn" id="openSurprise"><span>Sürprizi Aç</span><b>♡</b></button>
+<p class="sound-hint">En güzel deneyim için sesi aç ✦</p>
+</div>
+</section>
+<main aria-hidden="true" class="app" id="app">
+<header class="first-memory" data-note="Seni ilk bu halinle tanıdım. İyi ki tanımışım bebeğim. ❤️" data-photo="assets/photos/02-deniz.webp" id="home">
+<img alt="Şevval deniz kenarında" src="assets/photos/02-deniz.webp"/>
+<div class="first-memory-shade"></div>
+<nav class="topbar"><button class="brand" data-go="home">YÖG</button></nav>
+<div class="tap-hint">Fotoğrafa dokun ♡</div>
+<div class="scroll-cue"><span></span><small>kaydır</small></div>
+</header>
+<section class="love-counter-section" id="loveCounter" aria-label="Tanıştığımızdan beri geçen süre">
+  <div class="love-counter-glow love-counter-glow-a" aria-hidden="true"></div>
+  <div class="love-counter-glow love-counter-glow-b" aria-hidden="true"></div>
+  <div class="love-counter-card reveal">
+    <div class="love-counter-heart" aria-hidden="true"><span>♥</span></div>
+    <p class="love-counter-kicker">BİZİM HİKÂYEMİZ</p>
+    <h2>Tanıştığımızdan beri<br/><em>geçen güzel zaman...</em></h2>
+    <button class="love-counter-date" id="loveCounterDate" type="button" aria-label="Tanışma tarihi 1 Ağustos 2025">
+      <span>01</span><i>•</i><span>08</span><i>•</i><span>2025</span>
+    </button>
+    <div class="love-counter-grid" aria-live="polite">
+      <div class="love-time-box"><strong id="loveDays">0</strong><small>GÜN</small></div>
+      <div class="love-time-box"><strong id="loveHours">00</strong><small>SAAT</small></div>
+      <div class="love-time-box"><strong id="loveMinutes">00</strong><small>DAKİKA</small></div>
+      <div class="love-time-box"><strong id="loveSeconds">00</strong><small>SANİYE</small></div>
+    </div>
+    <p class="love-counter-copy">Ve her geçen saniye seni<br/><b>biraz daha çok seviyorum...</b></p>
+    <div class="love-counter-line" aria-hidden="true"><span></span><i>♡</i><span></span></div>
+  </div>
+</section>
+<section class="emotional-interactions" id="emotionalInteractions" aria-label="Kalbimdeki yerin ve zaman dursa">
+  <div class="emotion-card heart-place-card reveal">
+    <span class="emotion-kicker">SADECE SANA AİT</span>
+    <h2>Kalbimdeki Yerin</h2>
+    <p class="emotion-intro">Her atışımda sana ait olan yere dokun.</p>
+    <button class="heart-line-trigger" id="heartPlaceButton" type="button" aria-label="Kalbimdeki yerini aç">
+      <span class="anatomical-heart-glow" aria-hidden="true"></span>
+      <img src="assets/anatomik-kalp.webp" alt="" aria-hidden="true">
+      <small>KALBİ HİSSET</small>
+    </button>
+  </div>
+
+  <div class="emotion-card time-stop-card reveal">
+    <span class="emotion-kicker">BİRKAÇ SANİYELİĞİNE</span>
+    <h2>Eğer Zaman Dursa...</h2>
+    <p class="emotion-intro">Seninle geçen güzel anları biraz daha uzun yaşayabilmek için...</p>
+    <button class="emotion-button time-stop-button" id="timeStopButton" type="button"><span>⌛</span> Zamanı durdur</button>
+    <div class="time-stop-message" id="timeStopMessage" aria-live="polite" aria-hidden="true">
+      <p id="timeStopLine">Eğer elimde olsaydı...</p>
+      <div class="time-stop-progress"><span id="timeStopProgress"></span></div>
+    </div>
+  </div>
+</section>
+<section class="experience-hub" id="experiences">
+<div class="hub-orbit hub-orbit-a"></div><div class="hub-orbit hub-orbit-b"></div>
+<div class="hub-head reveal">
+<span class="hub-badge">Hayatıma Özel</span>
+<h2>Dokunduğun her yerde<br/><em>başka bir sürpriz.</em></h2>
+<p>Bugün sadece gezme; merak et, dokun ve keşfet.</p>
+</div>
+<div class="daily-card reveal">
+<div class="daily-icon">☀</div><div><small id="dailyDate">BUGÜN</small><strong id="dailyMessage">Bugün kendine biraz zaman ayır olur mu? ❤️</strong></div>
+</div>
+<button aria-label="Gizli tarih" class="secret-date reveal" id="secretDate">01 • 08 • 2025</button>
+<div class="special-actions">
+<button class="premium-card blue reveal note-card" id="saySomething"><span class="folded-corner" aria-hidden="true"></span><span class="pc-icon note-line-icon" aria-hidden="true"><i></i><i></i><i></i></span><span class="pc-copy"><small>HER DOKUNUŞTA YENİ</small><b>Sana Sığdıramadığım Kelimelerim</b><em>Furkan'dan sana küçük bir cümle</em></span><span class="card-action">Dokun <strong>→</strong></span></button>
+<button class="premium-card rose reveal envelope-card" id="openEnvelopes"><span class="envelope-lines" aria-hidden="true"></span><span class="pc-icon wax-seal-icon" aria-hidden="true">F</span><span class="pc-copy"><small>SADECE SANA</small><b>Dijital Zarflar</b><em>Doğru an için saklanan mektuplar</em></span><span class="card-action">4 zarf <strong>→</strong></span></button>
+</div>
+<div class="games-intro reveal">
+<span class="games-kicker">KALBİMDE SAKLADIKLARIM</span>
+<h3>Dokundukça biraz daha<br/><em>bizi anlatıyor.</em></h3>
+<p>Bir tarih, birkaç küçük ayrıntı, sana verdiğim sözler ve birlikte kurduğum hayaller...</p>
+</div>
+<div class="games-stack">
+<button class="premium-card game-card gold reveal" id="ourBeginning"><span class="game-number">01</span><span class="pc-icon emotional-glyph date-glyph">01</span><span class="pc-copy"><small>SENİ TANIMAYA BAŞLADIĞIM GÜN</small><b>01.08.2025 — Sana Çıkan Yolum</b><em>O günün nasıl hayatımın en güzel başlangıcına dönüştüğünü oku.</em></span><span class="game-open">Hatırla <strong>↗</strong></span></button>
+<button class="premium-card game-card violet reveal" id="cleanPolaroid"><span class="game-number">02</span><span class="pc-icon emotional-glyph">“ ”</span><span class="pc-copy"><small>YALNIZCA BİZE AİT</small><b>Bizim Küçük Sözlüğümüz</b><em>Söylediğimiz kelimelerin bende saklı anlamları.</em></span><span class="game-open">Oku <strong>↗</strong></span></button>
+<button class="premium-card game-card teal reveal" id="littleDetails"><span class="game-number">03</span><span class="pc-icon emotional-glyph detail-glyph">✦</span><span class="pc-copy"><small>BELKİ SEN FARK ETMİYORSUN</small><b>Sende Sevdiğim Küçük Şeyler</b><em>Her dokunuşta sende sevdiğim başka bir ayrıntı.</em></span><span class="game-open">Oku <strong>↗</strong></span></button>
+<button class="premium-card game-card night reveal" id="lightCandles"><span class="game-number">04</span><span class="pc-icon emotional-glyph">◷</span><span class="pc-copy"><small>GÜNÜN HER YERİNDE</small><b>Seni Özlediğim Anlar</b><em>Gün içinde aklımın sana döndüğü küçük anlar.</em></span><span class="game-open">Hisset <strong>↗</strong></span></button>
+<button class="premium-card game-card ruby reveal" id="myPromises"><span class="game-number">05</span><span class="pc-icon emotional-glyph promise-glyph">F</span><span class="pc-copy"><small>BUGÜNDEN YARINLARIMIZA</small><b>Sana Verdiğim Sözler</b><em>Sana sakladığım dört sessiz sözün mührünü aç.</em></span><span class="game-open">Mührü Aç <strong>↗</strong></span></button>
+<button class="premium-card game-card mint reveal" id="ourFuture"><span class="game-number">06</span><span class="pc-icon emotional-glyph future-glyph">✉</span><span class="pc-copy"><small>BUGÜNDEN GELECEĞİMİZE</small><b>Gelecekteki Bize Mektup</b><em>Bir gün birlikte okuyacağımız satırları aç.</em></span><span class="game-open">Mektubu Aç <strong>↗</strong></span></button>
+</div>
+</section>
+<section class="lyrics-tv-section" id="lyricsTv" aria-labelledby="lyricsTvTitle">
+  <div class="lyrics-tv-heading reveal">
+    <span class="section-kicker">SÖZLERİ DİKKATLİ DİNLE</span>
+    <h3 id="lyricsTvTitle">Dinlerken<br><em>beni hatırla.</em></h3>
+    <p>Bazen sana söylemek istediklerimi bir şarkının sözlerine bırakıyorum.</p>
+  </div>
+  <div class="lyrics-tv-layout reveal">
+    <div class="lyrics-tv-set" id="lyricsTvSet">
+      <div class="lyrics-tv-bezel">
+        <div class="lyrics-tv-screen">
+          <video id="lyricsTvPlayer" title="Carla Morrison — Disfruto Türkçe çeviri videosu" preload="metadata" playsinline>
+            <source src="assets/carla-morrison-disfruto.mp4" type="video/mp4">
+          </video>
+          <div class="lyrics-tv-off" id="lyricsTvOff">
+            <span>F</span>
+            <small>KUMANDADAN TELEVİZYONU AÇ</small>
+          </div>
+          <div class="lyrics-tv-glass" aria-hidden="true"></div>
+          <div class="lyrics-tv-channel" id="lyricsTvChannel"><small>KANAL 01</small><b>Carla Morrison — Disfruto</b></div>
+        </div>
+        <div class="lyrics-tv-brand"><i></i><b>FURKAN TV</b><span></span></div>
+      </div>
+      <div class="lyrics-tv-stand" aria-hidden="true"></div>
+    </div>
+    <div class="lyrics-remote-wrap">
+      <small class="lyrics-remote-label">KUMANDA</small>
+      <div class="lyrics-remote" aria-label="Televizyon kumandası">
+        <button class="lyrics-power" id="lyricsTvPower" type="button" aria-label="Televizyonu aç veya kapat">⏻</button>
+        <div class="lyrics-remote-status"><i id="lyricsTvLed"></i><span id="lyricsTvStatus">Kapalı</span></div>
+        <div class="lyrics-remote-ring">
+          <button data-tv-action="volumeUp" type="button" aria-label="Sesi yükselt">＋</button>
+          <button data-tv-action="back10" type="button" aria-label="On saniye geri">−10</button>
+          <button class="lyrics-play" data-tv-action="playPause" type="button" aria-label="Oynat veya duraklat">▶</button>
+          <button data-tv-action="forward10" type="button" aria-label="On saniye ileri">+10</button>
+          <button data-tv-action="volumeDown" type="button" aria-label="Sesi azalt">−</button>
+        </div>
+        <div class="lyrics-track-nav">
+          <button data-tv-action="previous" type="button" aria-label="Önceki şarkı"><span>←</span><small>Önceki Şarkı</small></button>
+          <button data-tv-action="next" type="button" aria-label="Sonraki şarkı"><small>Sonraki Şarkı</small><span>→</span></button>
+        </div>
+        <div class="lyrics-remote-bottom">
+          <button data-tv-action="mute" type="button"><span>⌁</span><small>Sessiz</small></button>
+          <button data-tv-action="restart" type="button"><span>↺</span><small>Başa sar</small></button>
+          <button data-tv-action="fullscreen" type="button"><span>⛶</span><small>Tam ekran</small></button>
+        </div>
+      </div>
+      <p class="lyrics-tv-note">Bu şarkının sözlerinde sana bırakılmış bir şey var.</p>
+      <small class="lyrics-tv-local">Video televizyonun içinde, tamamen sana özel oynatılıyor.</small>
+      <button class="lyrics-final-open" id="lyricsFinalOpen" type="button">Şarkılardan Sonra, Son Mesajıma Geç <span>→</span></button>
+    </div>
+  </div>
+</section>
+<section aria-label="Şevval'in fotoğraf galerisi" class="memory-story vertical-gallery" id="story"><div class="vertical-gallery-head reveal"><div class="section-kicker">EN GÜZEL HÂLLERİN</div>
+<h3>Sana bakarken<br/><em>aklımdan geçenler.</em></h3>
+<p>Her fotoğrafında sana söylemek istediğim başka bir cümle var.</p>
+<button class="primary-btn" id="startMemories" type="button">Albümü Aç <b>→</b></button></div><div class="vertical-memory-stack" id="verticalMemoryStack"><figure class="vertical-memory-card" data-memory-index="0"><div aria-label="1. fotoğraf; çift dokununca kalp bırak" class="vertical-memory-media" tabindex="0"><img alt="Şevval'in fotoğrafı 1" loading="eager" src="assets/photos/02-deniz.webp"/><span aria-hidden="true" class="vertical-double-heart">♥</span></div><figcaption><small class="vertical-memory-count">01 / 14</small><p>Her şey bu fotoğraf ile başladı.</p><span aria-hidden="true" class="vertical-memory-heart">♡</span></figcaption></figure><figure class="vertical-memory-card" data-memory-index="1"><div aria-label="2. fotoğraf; çift dokununca kalp bırak" class="vertical-memory-media" tabindex="0"><img alt="Şevval'in fotoğrafı 2" loading="lazy" src="assets/photos/03-yakin.webp"/><span aria-hidden="true" class="vertical-double-heart">♥</span></div><figcaption><small class="vertical-memory-count">02 / 14</small><p>Bu fotoğrafın yeri bende çok ayrı. Dilini çok seviyorum tatlı bebeğim.</p><span aria-hidden="true" class="vertical-memory-heart">♡</span></figcaption></figure><figure class="vertical-memory-card" data-memory-index="2"><div aria-label="3. fotoğraf; çift dokununca kalp bırak" class="vertical-memory-media" tabindex="0"><img alt="Şevval'in fotoğrafı 3" loading="lazy" src="assets/photos/04-deniz-selfie.webp"/><span aria-hidden="true" class="vertical-double-heart">♥</span></div><figcaption><small class="vertical-memory-count">03 / 14</small><p>Bu fotoğrafa shop yapmıştın, saçın dağınık çıkıyor diye... Ama ben doğal halini kullandım. Seni böyle seviyorum.</p><span aria-hidden="true" class="vertical-memory-heart">♡</span></figcaption></figure><figure class="vertical-memory-card" data-memory-index="3"><div aria-label="4. fotoğraf; çift dokununca kalp bırak" class="vertical-memory-media" tabindex="0"><img alt="Şevval'in fotoğrafı 4" loading="lazy" src="assets/photos/05-yesil.webp"/><span aria-hidden="true" class="vertical-double-heart">♥</span></div><figcaption><small class="vertical-memory-count">04 / 14</small><p>Bitiyorum sana ya.</p><span aria-hidden="true" class="vertical-memory-heart">♡</span></figcaption></figure><figure class="vertical-memory-card" data-memory-index="4"><div aria-label="5. fotoğraf; çift dokununca kalp bırak" class="vertical-memory-media" tabindex="0"><img alt="Şevval'in fotoğrafı 5" loading="lazy" src="assets/photos/06-kafe.webp"/><span aria-hidden="true" class="vertical-double-heart">♥</span></div><figcaption><small class="vertical-memory-count">05 / 14</small><p>Bu fotoğraf bana resmen date yapmışız gibi bir his veriyor. Gözlerime öyle etkileyici bakıyorsun ki...</p><span aria-hidden="true" class="vertical-memory-heart">♡</span></figcaption></figure><figure class="vertical-memory-card" data-memory-index="5"><div aria-label="6. fotoğraf; çift dokununca kalp bırak" class="vertical-memory-media" tabindex="0"><img alt="Şevval'in fotoğrafı 6" loading="lazy" src="assets/photos/07-dil.webp"/><span aria-hidden="true" class="vertical-double-heart">♥</span></div><figcaption><small class="vertical-memory-count">06 / 14</small><p>Dilini ısırmak istediğim bir başka fotoğraf.</p><span aria-hidden="true" class="vertical-memory-heart">♡</span></figcaption></figure><figure class="vertical-memory-card" data-memory-index="6"><div aria-label="7. fotoğraf; çift dokununca kalp bırak" class="vertical-memory-media" tabindex="0"><img alt="Şevval'in fotoğrafı 7" loading="lazy" src="assets/photos/08-elbise.webp"/><span aria-hidden="true" class="vertical-double-heart">♥</span></div><figcaption><small class="vertical-memory-count">07 / 14</small><p>Sesli gülüşün dışında gülüşünü ilk defa gördüğüm, benim için çok özel bir fotoğraf. En sevme sebebim de o gülüşünü uzun uzun izleyebilmek.</p><span aria-hidden="true" class="vertical-memory-heart">♡</span></figcaption></figure><figure class="vertical-memory-card" data-memory-index="7"><div aria-label="8. fotoğraf; çift dokununca kalp bırak" class="vertical-memory-media" tabindex="0"><img alt="Şevval'in fotoğrafı 8" loading="lazy" src="assets/photos/09-beyaz.webp"/><span aria-hidden="true" class="vertical-double-heart">♥</span></div><figcaption><small class="vertical-memory-count">08 / 14</small><p>Bu fotoğrafı sen çok seviyordun.</p><span aria-hidden="true" class="vertical-memory-heart">♡</span></figcaption></figure><figure class="vertical-memory-card" data-memory-index="8"><div aria-label="9. fotoğraf; çift dokununca kalp bırak" class="vertical-memory-media" tabindex="0"><img alt="Şevval'in fotoğrafı 9" loading="lazy" src="assets/photos/10-gunes.webp"/><span aria-hidden="true" class="vertical-double-heart">♥</span></div><figcaption><small class="vertical-memory-count">09 / 14</small><p>Güneş bile seni kıskanıp kareye girmiş.</p><span aria-hidden="true" class="vertical-memory-heart">♡</span></figcaption></figure><figure class="vertical-memory-card" data-memory-index="9"><div aria-label="10. fotoğraf; çift dokununca kalp bırak" class="vertical-memory-media" tabindex="0"><img alt="Şevval'in fotoğrafı 10" loading="lazy" src="assets/photos/11-asansor-selfie.webp"/><span aria-hidden="true" class="vertical-double-heart">♥</span></div><figcaption><small class="vertical-memory-count">10 / 14</small><p>En sıradan anlarda bile fotoğrafı güzelleştiren bir hâlin var.</p><span aria-hidden="true" class="vertical-memory-heart">♡</span></figcaption></figure><figure class="vertical-memory-card" data-memory-index="10"><div aria-label="11. fotoğraf; çift dokununca kalp bırak" class="vertical-memory-media" tabindex="0"><img alt="Şevval'in fotoğrafı 11" loading="lazy" src="assets/photos/12-araba-selfie.webp"/><span aria-hidden="true" class="vertical-double-heart">♥</span></div><figcaption><small class="vertical-memory-count">11 / 14</small><p>Bu fotoğrafa her baktığımda o anki yazışmalarımız geliyor aklıma. Sanki fotoğrafların benimle konuşuyor.</p><span aria-hidden="true" class="vertical-memory-heart">♡</span></figcaption></figure><figure class="vertical-memory-card" data-memory-index="11"><div aria-label="12. fotoğraf; çift dokununca kalp bırak" class="vertical-memory-media" tabindex="0"><img alt="Şevval'in fotoğrafı 12" loading="lazy" src="assets/photos/13-pembe-elbise.webp"/><span aria-hidden="true" class="vertical-double-heart">♥</span></div><figcaption><small class="vertical-memory-count">12 / 14</small><p>Renkler sana değil, sen renklere güzellik katıyorsun.</p><span aria-hidden="true" class="vertical-memory-heart">♡</span></figcaption></figure><figure class="vertical-memory-card" data-memory-index="12"><div aria-label="13. fotoğraf; çift dokununca kalp bırak" class="vertical-memory-media" tabindex="0"><img alt="Şevval'in fotoğrafı 13" loading="lazy" src="assets/photos/14-kafe-bordo.webp"/><span aria-hidden="true" class="vertical-double-heart">♥</span></div><figcaption><small class="vertical-memory-count">13 / 14</small><p>Sana kırmızı gerçekten çok yakışıyor.</p><span aria-hidden="true" class="vertical-memory-heart">♡</span></figcaption></figure><figure class="vertical-memory-card" data-memory-index="13"><div aria-label="14. fotoğraf; çift dokununca kalp bırak" class="vertical-memory-media" tabindex="0"><img alt="Şevval'in fotoğrafı 14" loading="lazy" src="assets/photos/15-lacivert-elbise.webp"/><span aria-hidden="true" class="vertical-double-heart">♥</span></div><figcaption><small class="vertical-memory-count">14 / 14</small><p>En sevdiğin renk, en sevdiğim sen ve en sevdiğim kare.</p><span aria-hidden="true" class="vertical-memory-heart">♡</span></figcaption></figure></div><div class="vertical-gallery-final reveal"><small>EN GÜZEL HÂLLERİN</small>
+<h3>Her karede<br/><em>başka bir güzellik.</em></h3>
+<p>Bu bölümde yalnızca fotoğrafların değil,<br/>onlara bakarken içimden geçen küçük cümleler vardı.</p>
+<div class="memory-signature">Umarım kendine bazen<br/>benim gördüğüm kadar güzel bakarsın.<br/><b>Sevdiceğin Furkan 🤍</b></div></div></section>
+<div class="cinematic-photo-modal" id="cinematicPhotoModal" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Fotoğrafı tam ekran görüntüle">
+  <button class="cinematic-photo-close" id="cinematicPhotoClose" type="button" aria-label="Fotoğrafı kapat">×</button>
+  <div class="portrait-album-progress" id="portraitAlbumProgress" aria-hidden="true"></div>
+  <button class="cinematic-photo-nav cinematic-photo-prev" id="cinematicPhotoPrev" type="button" aria-label="Önceki fotoğraf">‹</button>
+  <figure class="cinematic-photo-stage">
+    <div class="cinematic-photo-frame"><img id="cinematicPhotoImage" src="" alt="Şevval'in büyütülmüş fotoğrafı"></div>
+    <span class="portrait-album-heart" id="portraitAlbumHeart" aria-hidden="true">♥</span>
+    <figcaption><small id="cinematicPhotoCount"></small><p id="cinematicPhotoCaption"></p><span>Kaydırarak diğer fotoğrafa geç</span></figcaption>
+  </figure>
+  <div class="portrait-album-finale">
+    <small>EN GÜZEL HÂLLERİN</small>
+    <h2>Her karede<br><em>başka bir güzellik.</em></h2>
+    <p>Bu albümde yalnızca fotoğrafların değil, onlara bakarken içimden geçen küçük cümleler vardı.</p>
+    <strong>Umarım kendine bazen<br>benim gördüğüm kadar güzel bakarsın.</strong>
+    <button id="closePortraitAlbumFinale" type="button">Albümü kalbimde sakla</button>
+  </div>
+  <button class="cinematic-photo-nav cinematic-photo-next" id="cinematicPhotoNext" type="button" aria-label="Sonraki fotoğraf">›</button>
+</div>
+<section class="little-sevval-section" id="littleSevval" aria-labelledby="littleSevvalTitle">
+  <div class="little-sevval-intro reveal">
+    <p class="little-sevval-kicker">BİR ÇOCUKLUKTAN BUGÜNE UZANAN HİKÂYE</p>
+    <h3 id="littleSevvalTitle">O Küçük Kızdan<br><em>Bugünkü Sana.</em></h3>
+    <p>Önce seni sen yapan küçücük anılar… Sonra yıllar sonra karşıma çıkan ve bütün kalbimle sevdiğim sen.</p>
+    <button class="keepsake-box" id="openLittleSevval" type="button" aria-label="Küçük Şevval'in hatıra kutusunu aç">
+      <span class="keepsake-lid"><i></i></span><span class="keepsake-body"><b>Ş</b></span>
+      <small>HİKÂYENİ AÇ</small>
+    </button>
+  </div>
+</section>
+<div class="childhood-album" id="childhoodAlbum" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="childhoodAlbumTitle">
+  <button class="childhood-close" id="closeChildhoodAlbum" type="button" aria-label="Albümü kapat">×</button>
+  <div class="childhood-progress" id="childhoodProgress" aria-hidden="true"></div>
+  <button class="childhood-nav childhood-prev" id="childhoodPrev" type="button" aria-label="Önceki fotoğraf">‹</button>
+  <div class="childhood-pages" id="childhoodPages">
+    <article class="childhood-page is-active"><figure><img src="assets/childhood/01-bebek.webp" alt="Bebek Şevval" loading="lazy"><figcaption><small>EN BAŞINDAN</small><p>Her şey, dünyaya gözlerini kapatıp huzurla uyuyan bu küçücük kızla başladı.</p></figcaption></figure></article>
+    <article class="childhood-page"><figure><img src="assets/childhood/02-minik.webp" alt="Minik Şevval" loading="lazy"><figcaption><small>MİNİCİK BİR SEN</small><p>Daha o zamanlardan belliymiş; insanın içine işleyen o tatlı bakışların.</p></figcaption></figure></article>
+    <article class="childhood-page"><figure><img src="assets/childhood/03-at-kuyruklari.webp" alt="Saçları iki yandan bağlı küçük Şevval" loading="lazy"><figcaption><small>O KOCAMAN GÖZLER</small><p>Bugün baktığımda kaybolduğum gözlerin, daha küçücükken bile aynı güzellikteymiş.</p></figcaption></figure></article>
+    <article class="childhood-page"><figure><img src="assets/childhood/04-minik-sevval.webp" alt="Küçük Şevval" loading="lazy"><figcaption><small>KÜÇÜK ŞEVVAL</small><p>Bu fotoğrafa bakınca insanın seni kucağına alıp koruyası geliyor.</p></figcaption></figure></article>
+    <article class="childhood-page"><figure><img src="assets/childhood/05-yuz-boyama.webp" alt="Yüzü boyanmış küçük Şevval" loading="lazy"><figcaption><small>OYUN DOLU GÜNLER</small><p>Yüzündeki renkler kadar meraklı ve ışıl ışıl bir çocukluk.</p></figcaption></figure></article>
+    <article class="childhood-page"><figure><img src="assets/childhood/06-bebegiyle.webp" alt="Oyuncak bebeğiyle küçük Şevval" loading="lazy"><figcaption><small>OYUNCAK BEBEĞİNLE</small><p>O gülüşün hiç değişmemiş; yalnızca büyümüş ve hayatımı güzelleştirmiş.</p></figcaption></figure></article>
+    <article class="childhood-page"><figure><img src="assets/childhood/07-bes-yas.webp" alt="Beş yaşındaki Şevval ve doğum günü pastası" loading="lazy"><figcaption><small>BEŞ YAŞINDA</small><p>O gün pastandaki beş mumu üfleyen küçük kızın, bugün on sekizinci yaşını kutluyorum.</p></figcaption></figure></article>
+    <article class="childhood-page"><figure><img src="assets/childhood/08-salincak.webp" alt="Salıncakta küçük Şevval" loading="lazy"><figcaption><small>KÜÇÜK MACERALAR</small><p>Her fotoğraf, bugünkü seni oluşturan küçücük bir hikâye gibi.</p></figcaption></figure></article>
+    <article class="childhood-page"><figure><img src="assets/childhood/09-kaydirak.webp" alt="Kaydırakta küçük Şevval" loading="lazy"><figcaption><small>KORKUSUZCA</small><p>Kollarını iki yana açıp hayatın içine böyle bırakmışsın kendini.</p></figcaption></figure></article>
+    <article class="childhood-page"><figure><img src="assets/childhood/10-uykulu.webp" alt="Uykulu küçük Şevval" loading="lazy"><figcaption><small>UYKULU HÂLİN</small><p>Demek seni uyuturken hayal ettiğim o tatlı hâlin, çocukluğundan beri seninleymiş.</p></figcaption></figure></article>
+    <article class="childhood-page"><figure><img src="assets/childhood/11-motorda.webp" alt="Motosiklet üzerinde küçük Şevval" loading="lazy"><figcaption><small>KÜÇÜK AMA CESUR</small><p>Bu karedeki cesaretin ve neşen, bugün olduğun insanda hâlâ yaşıyor.</p></figcaption></figure></article>
+    <article class="childhood-page"><figure><img src="assets/childhood/12-kapsonlu.webp" alt="Kapüşonlu küçük Şevval" loading="lazy"><figcaption><small>BÜYÜRKEN</small><p>Ben o günlerini göremedim; ama büyüyüp karşıma çıkan hâlini bütün kalbimle sevdim.</p></figcaption></figure></article>
+    <article class="childhood-page childhood-transition"><div><small>YILLAR GEÇTİ…</small><h2>O küçük kız<br><em>büyüdü.</em></h2><p>Ben çocukluğunun hiçbir anında yanında değildim. İlk adımlarını, oyunlarını ve büyüdüğün günleri göremedim.<br><br>Ama bütün o yıllar, seni bir gün karşıma çıkacak olan o güzel insana dönüştürdü.</p><strong>Ve hikâyenin benim bildiğim kısmı burada başladı…</strong></div></article>
+    <article class="childhood-page grown-page"><figure><img src="assets/photos/02-deniz.webp" alt="Bugünkü Şevval'in deniz kenarındaki fotoğrafı" loading="lazy"><figcaption><small>SONRA SENİ GÖRDÜM</small><p>Bir zamanlar dünyaya merakla bakan o küçük kız büyümüş; ben daha hikâyenin başını bilmeden bu fotoğrafına bakakalmıştım.</p></figcaption></figure></article>
+    <article class="childhood-page grown-page"><figure><img src="assets/photos/03-yakin.webp" alt="Bugünkü Şevval'in yakın çekim fotoğrafı" loading="lazy"><figcaption><small>O GÖZLER HİÇ DEĞİŞMEDİ</small><p>Çocukluk fotoğraflarındaki o kocaman gözler hâlâ aynıydı. Yalnızca şimdi, baktığımda içinde kaybolduğum gözler olmuşlardı.</p></figcaption></figure></article>
+    <article class="childhood-page grown-page"><figure><img src="assets/photos/04-deniz-selfie.webp" alt="Bugünkü Şevval'in doğal fotoğrafı" loading="lazy"><figcaption><small>OLDUĞUN GİBİ</small><p>Saçını beğenmeyip bu fotoğrafı değiştirmiştin. Bense en çok doğal hâlini sevdim; çünkü büyüyen o küçük kız tam olarak buydu.</p></figcaption></figure></article>
+    <article class="childhood-page grown-page"><figure><img src="assets/photos/05-yesil.webp" alt="Bugünkü Şevval'in yeşilli fotoğrafı" loading="lazy"><figcaption><small>BÜYÜDÜĞÜN HÂL</small><p>Çocukken ne kadar tatlıysan, büyüdüğünde de insanın bakmaya doyamadığı kadar güzel olmuşsun. Bitiyorum sana.</p></figcaption></figure></article>
+    <article class="childhood-page grown-page"><figure><img src="assets/photos/06-kafe.webp" alt="Bugünkü Şevval'in kafedeki fotoğrafı" loading="lazy"><figcaption><small>KEŞKE KARŞIMDA OLSAYDIN</small><p>O küçük kızın yıllar sonra karşımda böyle oturacağını hayal ediyorum. Gözlerine bakarak seni saatlerce dinlemek isterdim.</p></figcaption></figure></article>
+    <article class="childhood-page grown-page"><figure><img src="assets/photos/07-dil.webp" alt="Bugünkü Şevval'in eğlenceli fotoğrafı" loading="lazy"><figcaption><small>İÇİNDEKİ ÇOCUK</small><p>Yüzünü boyayıp oyunlar oynayan o neşeli küçük kız hiç kaybolmamış. Bu hâlin hâlâ beni istemeden gülümsetiyor.</p></figcaption></figure></article>
+    <article class="childhood-page grown-page"><figure><img src="assets/photos/08-elbise.webp" alt="Bugünkü Şevval'in gülümsediği fotoğraf" loading="lazy"><figcaption><small>O GÜLÜŞÜN</small><p>Çocukluk fotoğraflarında başlayan o güzel gülüş, yıllar sonra benim en sevdiğim seslerden ve görüntülerden biri oldu.</p></figcaption></figure></article>
+    <article class="childhood-page grown-page"><figure><img src="assets/photos/09-beyaz.webp" alt="Bugünkü Şevval'in beyaz kıyafetli fotoğrafı" loading="lazy"><figcaption><small>SENİN SEVDİĞİN KARE</small><p>Bu fotoğrafı sen çok seviyordun. Ben ise ona baktığımda, bütün o yılların sonunda oluşan seni görüyorum.</p></figcaption></figure></article>
+    <article class="childhood-page grown-page"><figure><img src="assets/photos/10-gunes.webp" alt="Bugünkü Şevval'in güneşli fotoğrafı" loading="lazy"><figcaption><small>IŞIĞINLA</small><p>Kaydırakta kollarını açan o küçük kız büyümüş; şimdi girdiği her kareyi kendi ışığıyla güzelleştiriyor.</p></figcaption></figure></article>
+    <article class="childhood-page grown-page"><figure><img src="assets/photos/11-asansor-selfie.webp" alt="Bugünkü Şevval'in asansör selfiesi" loading="lazy"><figcaption><small>SIRADAN ANLARIN BİLE</small><p>Büyürken çekilen her fotoğrafın bir anıya dönüştüğü gibi, bugün en sıradan hâlin bile benim için saklamak istediğim bir kare.</p></figcaption></figure></article>
+    <article class="childhood-page grown-page"><figure><img src="assets/photos/12-araba-selfie.webp" alt="Bugünkü Şevval'in araba selfiesi" loading="lazy"><figcaption><small>FOTOĞRAFLARIN KONUŞUYOR</small><p>Bu kareye baktığımda yalnızca yüzünü değil, gönderdiğin günü ve konuşmalarımızı da hatırlıyorum. Hikâyene artık benim anılarım da karışmıştı.</p></figcaption></figure></article>
+    <article class="childhood-page grown-page"><figure><img src="assets/photos/13-pembe-elbise.webp" alt="Bugünkü Şevval'in pembe elbiseli fotoğrafı" loading="lazy"><figcaption><small>RENKLERİN İÇİNDE</small><p>Oyuncak bebeğine sarılan küçük kız büyümüş, şimdi giydiği her renge kendi güzelliğini katıyordu.</p></figcaption></figure></article>
+    <article class="childhood-page grown-page"><figure><img src="assets/photos/14-kafe-bordo.webp" alt="Bugünkü Şevval'in bordo kıyafetli fotoğrafı" loading="lazy"><figcaption><small>HER HÂLİNLE</small><p>Yıllar seni değiştirmiş olabilir ama yüzündeki sıcaklık hiç kaybolmamış. Kırmızı sana hâlâ çok güzel yakışıyor.</p></figcaption></figure></article>
+    <article class="childhood-page grown-page"><figure><img src="assets/photos/15-lacivert-elbise.webp" alt="Bugünkü Şevval'in lacivert elbiseli fotoğrafı" loading="lazy"><figcaption><small>BUGÜNKÜ SEN</small><p>Ve bütün bu fotoğrafların sonunda… En sevdiğin renk, en sevdiğim insanın üzerinde. Çocukluğundan bugüne uzanan hikâyenin en güzel hâli.</p></figcaption></figure></article>
+    <article class="childhood-page childhood-finale"><div><small>O KÜÇÜK KIZDAN BUGÜNKÜ SANA</small><h2 id="childhoodAlbumTitle">Geçmişindeki seni de,<br><em>bugünkü seni de seviyorum.</em></h2><p>Ben çocukluğunun hiçbir anında yanında değildim. Ama o küçük kızın büyüyüp karşıma çıkan hâlini tanıdım.<br><br>Şimdi eski fotoğraflarına baktığımda, sevdiğim insanın hikâyesinin nerede başladığını görüyorum.</p><strong>İyi ki o küçük kız büyümüş.<br>İyi ki bugünkü Şevval olmuş.<br>İyi ki bir gün benim hayatıma girmiş.</strong><button id="finishChildhoodAlbum" type="button">Hikâyeni kalbimde sakla</button></div></article>
+  </div>
+  <button class="childhood-nav childhood-next" id="childhoodNext" type="button" aria-label="Sonraki fotoğraf">›</button>
+  <p class="childhood-swipe-hint">Kaydırarak anılarda ilerle</p>
+</div>
+<section class="section message-section" id="message">
+<div aria-hidden="true" class="message-petals"></div>
+<div class="message-wrap reveal" id="birthdayLetter">
+<div class="wax">F</div>
+<p class="section-kicker">DOĞUM GÜNÜ MESAJIN</p>
+<div class="letter-intro cinematic-intro" id="letterIntro">
+<div class="cinema-line"><span></span><b>28 AĞUSTOS</b><span></span></div>
+<p class="cinema-whisper">Bir dakika...</p>
+<div class="letter-envelope" id="letterEnvelope" aria-hidden="true">
+  <div class="letter-envelope-paper"><span>28 Ağustos</span><b>Şevval’e</b><small>Furkan’dan</small></div>
+  <div class="letter-envelope-back"></div>
+  <div class="letter-envelope-flap"></div>
+  <div class="letter-envelope-pocket"></div>
+  <div class="letter-envelope-seal">F</div>
+</div>
+<h3>Gitmeden önce…<br/><em>Sana söylemek istediğim bir şey var.</em></h3>
+<p>Bu, doğum günü mesajının son sayfası değil; sana ayırdığım en özel yer.</p>
+<button class="letter-btn final-open-btn" id="openLetter" type="button">Mektubu Aç</button>
+</div>
+<div class="letter-reader" hidden="" id="letterReader">
+<div class="letter-progress"><span id="letterProgress"></span></div>
+<div class="letter-page cinematic-page" id="letterPage">
+<div class="paper-date">28 Ağustos <span>🤍</span></div>
+<div class="letter-ornament">✦</div>
+<div class="typed-message" id="typedMessage"></div>
+<figure class="letter-photo" hidden="" id="letterPhoto">
+<img alt="Şevval'in fotoğrafı" id="letterPhotoImg" src=""/>
+<figcaption id="letterPhotoNote"></figcaption>
+</figure>
+<div class="paper-signature">— Furkan</div>
+</div>
+<div class="letter-actions">
+<button class="letter-btn" id="nextLetter" type="button">Devam Et</button>
+<button class="voice-letter-btn" id="voiceLetter" type="button" aria-pressed="false"><span aria-hidden="true">▶</span> Sesimle Dinle</button>
+<audio id="furkanVoiceMessage" preload="metadata" src="assets/furkan-dogum-gunu-mesaji.mp3"></audio>
+<audio id="furkanVoiceMessageContinue" preload="metadata" src="assets/dogum-gunu-mesaji-devam.mp3"></audio>
+<div class="voice-playback-status" id="voicePlaybackStatus" hidden aria-live="polite">
+  <span id="voiceCurrentTime">0:00</span><div class="voice-progress-track"><span id="voiceProgressFill"></span></div><span id="voiceDuration">2:18</span>
+  <p class="voice-controls-hint">Ses oynatıcısının hemen altındaki butonlardan dinleme hızını seçebilir, <strong>“1:10’a Atla”</strong> butonuyla istediğin bölüme geçebilirsin.</p>
+  <div class="voice-playback-controls" aria-label="Ses oynatma seçenekleri">
+    <button class="voice-speed-btn is-active" type="button" data-voice-speed="1">1x</button>
+    <button class="voice-speed-btn" type="button" data-voice-speed="1.5">1.5x</button>
+    <button class="voice-speed-btn" type="button" data-voice-speed="2">2x</button>
+    <button class="voice-skip-btn" id="voiceSkipTo70" type="button"><span aria-hidden="true">↠</span> 1:10’a Atla</button>
+  </div>
+</div>
+<button class="text-btn" hidden="" id="replayMessage" type="button">Baştan oku ↻</button>
+</div>
+<div class="voice-permission" id="voicePermission" hidden aria-live="polite" role="dialog" aria-modal="true" aria-labelledby="voicePermissionTitle">
+  <div class="voice-permission-card">
+    <span class="voice-permission-heart" aria-hidden="true">🤍</span>
+    <h4 id="voicePermissionTitle">Bu satırları yazarken keşke yanında olabilseydim...</h4>
+    <p>Ama en azından sesimi de sana bırakmak istedim. Doğum günü mesajımı kendi sesimden dinlemek ister misin?</p>
+    <div class="voice-permission-actions">
+      <button class="letter-btn" id="acceptVoice" type="button">🤍 Evet, dinle</button>
+      <button class="text-btn" id="declineVoice" type="button">Şimdilik hayır</button>
+    </div>
+  </div>
+</div>
+</div>
+<div class="letter-finale cake-finale" hidden="" id="letterFinale">
+<div class="cake-reveal-note" id="cakeRevealNote">Sana küçük bir sürpriz daha hazırladım...</div>
+<div aria-live="polite" class="cake-stage" id="cakeStage">
+<div class="cake-glow"></div>
+<div class="cake-frame" id="cakeFrame">
+<img alt="18 Şevval yazılı doğum günü pastası" src="assets/sevval-18-pasta.webp"/>
+<div class="cake-slice" id="cakeSlice" aria-hidden="true"><img alt="" src="assets/sevval-18-pasta.webp"/></div>
+<div aria-hidden="true" class="number-candles" id="numberCandles"><span class="candle"><i class="flame"></i></span><span class="candle"><i class="flame"></i></span><span class="candle"><i class="flame"></i></span><span class="candle"><i class="flame"></i></span><span class="candle"><i class="flame"></i></span><span class="candle"><i class="flame"></i></span><span class="candle"><i class="flame"></i></span><span class="candle"><i class="flame"></i></span><span class="candle"><i class="flame"></i></span><span class="candle"><i class="flame"></i></span><span class="candle"><i class="flame"></i></span><span class="candle"><i class="flame"></i></span><span class="candle"><i class="flame"></i></span><span class="candle"><i class="flame"></i></span><span class="candle"><i class="flame"></i></span><span class="candle"><i class="flame"></i></span><span class="candle"><i class="flame"></i></span><span class="candle"><i class="flame"></i></span></div>
+</div>
+<p class="cake-title">18 Şevval</p>
+<p class="wish-prompt" id="wishPrompt" aria-live="polite"></p>
+<h3>İyi ki doğdun,<br><span>kelebeğim.</span></h3>
+<button class="letter-btn blow-btn" id="blowCandles" type="button"><span class="blow-main">Mumları üfle</span><small>Hazırsan dokun</small></button>
+<div class="lily-rain" id="lilyRain" aria-hidden="true"></div>
+<div class="secret-envelope-wrap" id="secretEnvelopeWrap" hidden>
+  <div class="secret-envelope-hint"><small>SANA AİT BİR NOT VAR</small><strong>Mektubu açmak için dokun</strong><span aria-hidden="true"></span></div>
+  <button class="secret-envelope" id="secretEnvelope" type="button" aria-label="Gizli zarfı aç">
+    <span class="secret-envelope-back"></span><span class="secret-envelope-letter">Şevval'e</span><span class="secret-envelope-flap"></span><span class="secret-envelope-pocket"></span><span class="secret-seal">F♡Ş</span>
+  </button>
+  <div class="secret-note" id="secretNote" hidden>
+    <small>FURKAN’DAN ŞEVVAL’E</small>
+    <p>Sen bende büyük iz bıraktın.<br>Ben de sana, ileride dönüp bakabileceğin küçük bir hatıra bırakıyorum.</p>
+    <strong>Bu sayfa, ne zaman istersen yeniden gelebileceğin küçük yerimiz olsun.</strong>
+  </div>
+  <div class="cake-cut-transition" id="cakeCutTransition" hidden>
+    <span aria-hidden="true">✦</span>
+    <p>Mektup burada bitmiyor.<br><strong>Şimdi ilk dilimi birlikte keselim.</strong></p>
+    <button class="letter-btn cut-cake-btn" id="cutCake" type="button">🍰 İlk Dilimi Kes</button>
+  </div>
+</div>
+<div class="cake-wish" hidden="" id="cakeWish">
+<div class="plush-surprise" id="plushSurprise" hidden aria-live="polite">
+  <div class="plush-gift-stage" id="plushGiftStage">
+    <button class="plush-gift" id="plushGift" type="button" aria-label="Peluş hediyesini aç" onclick="openPlushGift(event)"><span></span><i></i></button>
+    <p>Hediyeyi açmak için dokun</p>
+  </div>
+  <div class="plush-reveal" id="plushReveal" hidden>
+    <div class="plush-pair" id="plushPair" aria-hidden="true">
+      <div class="teddy" id="birthdayTeddy">
+        <span class="teddy-ear teddy-ear-left"></span><span class="teddy-ear teddy-ear-right"></span>
+        <span class="teddy-head"><i class="teddy-eye teddy-eye-left"></i><i class="teddy-eye teddy-eye-right"></i><i class="teddy-muzzle"></i><i class="teddy-nose"></i></span>
+        <span class="teddy-body"></span><span class="teddy-arm teddy-arm-left"></span><span class="teddy-arm teddy-arm-right"></span>
+        <span class="teddy-foot teddy-foot-left"></span><span class="teddy-foot teddy-foot-right"></span>
+        <span class="teddy-bow"><i></i><b></b></span>
+      </div>
+      <div class="duck" id="birthdayDuck">
+        <span class="duck-head"><i class="duck-eye duck-eye-left"></i><i class="duck-eye duck-eye-right"></i><i class="duck-beak"></i></span>
+        <span class="duck-body"></span><span class="duck-wing duck-wing-left"></span><span class="duck-wing duck-wing-right"></span>
+        <span class="duck-foot duck-foot-left"></span><span class="duck-foot duck-foot-right"></span>
+      </div>
+    </div>
+    <div class="plush-note" id="plushNote">
+      <p>Ben sana sarılamadığım zamanlarda...</p>
+      <strong>Bu küçük ruhumuz birbirine güzel hislerle sarılsın</strong>
+    </div>
+    <button class="plush-hug-btn" id="plushHugBtn" type="button" onclick="hugTeddy(event)">Sarıl</button>
+    <div class="photo-gift-stage" id="photoGiftStage" hidden>
+      <button class="photo-gift" id="photoGift" type="button" aria-label="Fotoğraf hediyesini aç"><span></span><i></i></button>
+      <p>Bir hediyen daha var...</p>
+    </div>
+    <div class="plush-photo-reveal" id="plushPhotoReveal" hidden>
+      <button class="plush-photo-close" id="plushPhotoClose" type="button" aria-label="Fotoğrafı kapat">×</button>
+      <img src="assets/ayicik-ordek.webp" alt="Ayıcık ve ördek peluş oyuncağın birlikte fotoğrafı">
+      <p>Bu küçük ikiliyi sana emanet ediyorum. 🤍</p>
+    </div>
+  </div>
+</div>
+<div class="made-with-love">💙 Bu uygulama senin için sevgiyle hazırlandı.</div>
+</div>
+<button class="text-btn" id="restartLetter" type="button">Mektubu yeniden oku ↻</button>
+</div>
+</div>
+</div>
+</section>
+<section class="section bedtime-tale-section" id="bedtimeTale" aria-labelledby="bedtimeTaleTitle">
+  <div class="bedtime-tale-card reveal">
+    <div class="bedtime-tale-copy">
+      <p class="bedtime-tale-kicker">HER GECE GİTTİĞİMİZ O YER</p>
+      <h3 id="bedtimeTaleTitle">Seni Uyuttuğum Masal</h3>
+      <div class="bedtime-tale-lines">
+        <p><strong>Hatırlıyor musun?</strong></p>
+        <p>Seni uyuturken anlattığım bir ev vardı…<br>Şöminesi hiç sönmeyen, camından karı izlediğimiz,<br>çocuklarımızın ve kedilerimizin yanımızda olduğu o ev.</p>
+        <p>O zamanlar yalnızca anlattığım bir masaldı…<br>Ama içindeki “biz”, benim için hep gerçekti.</p>
+      </div>
+      <button class="bedtime-tale-open" id="openBedtimeTale" type="button">Sana Anlattığım Yere Git <span aria-hidden="true">→</span></button>
+    </div>
+  </div>
+</section>
+<section class="section chat-section" id="chat"><div class="section-kicker reveal">FURKAN'LA KONUŞ</div><h3 class="reveal">Sana cevap veren<br/><em>küçük bir sürpriz.</em></h3><div class="chat-card reveal"><div class="chat-head"><div class="avatar">F</div><div><b>Furkan</b><small><span></span> seni dinliyor</small></div></div><div class="messages" id="messages"><div class="bubble bot">Ben gerçek değilim. Furkan'ın sana bıraktığı küçük bir yapay zekâyım. İstediğin her şeyi benimle konuşabilirsin. Ama şunu söyleyeyim... Biraz onun gibi düşünüyorum. O yüzden bazen saçmalarsam şaşırma.</div></div><div class="feeling-row" aria-label="Hızlı duygu seçenekleri"><button data-quick="Bugün mutluyum">Mutluyum</button><button data-quick="Seni özledim">Özledim</button><button data-quick="Biraz üzgünüm">Üzgünüm</button><button data-quick="Bana romantik bir şey söyle">Bana bir şey söyle</button></div><div class="quick-row"><button data-quick="Furkan beni ne kadar seviyor?">Beni ne kadar seviyor?</button><button data-quick="Şu an bana sarılsan ne söylerdin?">Bana sarılsan?</button><button data-quick="Beni neden seviyorsun?">Beni neden seviyorsun?</button></div><form class="chat-input" id="chatForm"><input autocomplete="off" id="chatText" placeholder="Aklından geçeni yaz..."/><button aria-label="Gönder">➤</button></form></div></section>
+<section class="section affection-section" id="affection">
+  <div class="section-kicker reveal">BİR ANLIĞINA MESAFEYİ UNUTALIM</div>
+  <h3 class="reveal">Şimdi biraz<br/><em>yanımda olur musun?</em></h3>
+  <div class="affection-grid reveal">
+    <article class="affection-card hug-card">
+      <div class="affection-icon hug-line-icon" aria-hidden="true"><i></i><i></i><b></b></div>
+      <small>YANINDA OLAMADIĞIMDA</small>
+      <h4>Gözlerini kapatır mısın, yavrum?</h4>
+      <p id="hugReply">Şimdi bütün mesafeyi susturup seni kollarımın arasına almak istiyorum.</p>
+      <span class="affection-count" id="hugCountLabel">Hazırsan bana dokun</span>
+      <button class="affection-btn" id="hugBtn" type="button">Bana Sarıl <span>→</span></button>
+    </article>
+    <article class="affection-card kiss-card">
+      <div class="affection-icon kiss-seal-icon" aria-hidden="true">
+        <svg viewBox="0 0 120 72" focusable="false">
+          <defs>
+            <linearGradient id="kissGradientCard" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#ffd1df"/>
+              <stop offset=".48" stop-color="#df7fa3"/>
+              <stop offset="1" stop-color="#9d3d69"/>
+            </linearGradient>
+          </defs>
+          <path class="kiss-upper" d="M8 38C26 34 36 18 53 28C57 30 59 32 60 33C64 28 69 24 77 25C89 26 99 34 112 38C92 41 78 42 60 42C42 42 27 41 8 38Z"/>
+          <path class="kiss-lower" d="M8 38C28 43 43 57 60 58C77 57 95 46 112 38C93 42 78 45 60 45C42 45 27 42 8 38Z"/>
+          <path class="kiss-line" d="M10 38C30 39 44 42 60 42C77 42 92 40 110 38"/>
+        </svg>
+      </div>
+      <small>SADECE İKİMİZİN</small>
+      <h4>Bir öpücüğünü bana bırakır mısın?</h4>
+      <p id="kissReply">Onu gülüşünün hemen yanına, seni her özlediğimde bulacağım yere saklayacağım.</p>
+      <span class="affection-count" id="kissCountLabel">En güzel yerinde saklı kalacak</span>
+      <button class="affection-btn" id="kissBtn" type="button">Öpücüğünü Bırak <span>→</span></button>
+    </article>
+  </div>
+  <div class="affection-particles" id="affectionParticles" aria-hidden="true"></div>
+</section>
+<div class="affection-moment" id="affectionMoment" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="affectionMomentTitle">
+  <div class="affection-moment-glow" aria-hidden="true"></div>
+  <div class="affection-moment-panel">
+    <button class="affection-moment-x" id="affectionMomentX" type="button" aria-label="Kapat">×</button>
+    <small id="affectionMomentKicker">MESAFE BİR ANLIĞINA DURDU</small>
+    <div class="affection-moment-visual" id="affectionMomentVisual" aria-hidden="true"></div>
+    <h3 id="affectionMomentTitle">Şimdi yanımdasın.</h3>
+    <p id="affectionMomentLine"></p>
+    <span class="affection-moment-sign">— Furkan</span>
+    <button class="affection-moment-close" id="affectionMomentClose" type="button">Bu Anı Sakla</button>
+  </div>
+</div>
+<footer class="finale" id="finale">
+<p class="eyebrow reveal">SONSUZ BİR İYİ Kİ</p>
+<h3 class="reveal">İyi ki doğdun<br/><em>Şevval.</em></h3>
+<div class="signature reveal">Furkan’dan, bütün kalbiyle ♡</div>
+<div class="eye-tribute reveal">
+<div class="eye-frame">
+<img alt="Şevval'in kahverengi gözü" src="assets/sevval-goz.webp"/>
+</div>
+<blockquote>Bir bakışın var; ne anlatılacak kadar kısa, ne de unutulacak kadar sıradan.</blockquote>
+<span aria-hidden="true" class="eye-heart">♡</span>
+</div>
+</footer>
+</main>
+
+
+<div class="heart-place-overlay" id="heartPlaceOverlay" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="heartPlaceTitle">
+  <div class="heart-place-ambient" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+  <div class="heart-place-panel">
+    <div class="vibration-check" id="vibrationCheck" aria-live="polite">
+      <span class="vibration-check-icon" aria-hidden="true">〰</span>
+      <small>ANDROID TİTREŞİM KONTROLÜ</small>
+      <h3>Önce küçük bir test</h3>
+      <p id="vibrationCheckText">Aşağıdaki butona dokun. Telefonun iki kez kısa titreşmesi gerekiyor.</p>
+      <button class="vibration-test-button" id="vibrationTestButton" type="button">Titreşimi Test Et</button>
+      <div class="vibration-answer" id="vibrationAnswer" hidden>
+        <strong>Titreşimi hissettin mi?</strong>
+        <button id="vibrationYes" type="button">Evet, devam et</button>
+        <button id="vibrationNo" type="button">Hayır</button>
+      </div>
+      <div class="vibration-help" id="vibrationHelp" hidden>
+        <b>Titreşim kapalı olabilir.</b>
+        <p>Ayarlar’da “Titreşim ve dokunsal geri bildirim” bölümünü aç. Sonra buraya dönüp yeniden deneyebilirsin.</p>
+      </div>
+      <button class="vibration-continue" id="vibrationContinue" type="button" hidden>Yine de Devam Et</button>
+    </div>
+    <p class="heart-place-kicker">KALBİMDEKİ YERİN</p>
+    <button class="anatomical-heart" id="heartHoldButton" type="button" aria-label="Kalbe basılı tut">
+      <span class="anatomical-heart-ring"></span>
+      <img src="assets/anatomik-kalp.webp" alt="Atan anatomik kalp" draggable="false">
+      <span class="heart-hold-progress" aria-hidden="true"><i></i></span>
+    </button>
+    <h2 id="heartPlaceTitle">Şevval</h2>
+    <p class="heart-place-line" id="heartPlaceLine">Kalbime dokun ve birkaç saniye basılı tut…</p>
+    <button class="heart-sound-toggle" id="heartSoundToggle" type="button" aria-pressed="true">♩ Kalp sesi açık</button>
+    <div class="heart-place-finale" id="heartPlaceFinale">
+      <strong>Kalbimdeki yerini aramana gerek yok…<br>Her atışımda zaten oradasın.</strong>
+      <b>01.08.2025</b>
+    </div>
+    <button class="heart-place-close" id="heartPlaceClose" type="button">Kalbimde kalsın</button>
+  </div>
+</div>
+<div class="time-freeze-overlay" id="timeFreezeOverlay" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="timeFreezeTitle">
+  <div class="time-freeze-stars" aria-hidden="true"></div>
+  <div class="time-freeze-panel">
+    <div class="time-freeze-hourglass" aria-hidden="true">⌛</div>
+    <p class="time-freeze-kicker">BİRKAÇ SANİYELİĞİNE</p>
+    <h2 id="timeFreezeTitle">Zaman durdu...</h2>
+    <div class="time-freeze-counter" aria-label="Durdurulan tanışma sayacı">
+      <div><strong id="freezeDays">0</strong><small>GÜN</small></div>
+      <div><strong id="freezeHours">00</strong><small>SAAT</small></div>
+      <div><strong id="freezeMinutes">00</strong><small>DAKİKA</small></div>
+      <div><strong id="freezeSeconds">00</strong><small>SANİYE</small></div>
+    </div>
+    <p class="time-freeze-line" id="timeFreezeLine">Eğer elimde olsaydı...</p>
+    <div class="time-freeze-progress"><span id="timeFreezeProgress"></span></div>
+    <small class="time-freeze-hint">Zaman birazdan yeniden akacak...</small>
+  </div>
+</div>
+<div class="bedtime-world" id="bedtimeWorld" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="bedtimeWorldTitle">
+  <img class="bedtime-world-image" src="assets/seni-uyuttugum-masal.webp" alt="Karlı gökdelen manzaralı evde şömine karşısında çocukları ve kedileriyle oturan Şevval ve Furkan">
+  <div class="bedtime-world-shade" aria-hidden="true"></div>
+  <div class="bedtime-world-fire" aria-hidden="true"></div>
+  <button class="bedtime-world-close" id="closeBedtimeTale" type="button" aria-label="Masalı kapat">×</button>
+  <button class="bedtime-world-sound" id="bedtimeSoundToggle" type="button" aria-pressed="true"><span aria-hidden="true">♩</span> Şömine sesi açık</button>
+  <div class="bedtime-world-copy">
+    <p>İŞTE, SANA ANLATTIĞIM YER…</p>
+    <h2 id="bedtimeWorldTitle">Seni Uyuttuğum Masal</h2>
+    <div>
+      Dışarıda kar yağıyor. Şömine usulca yanıyor.<br>
+      Çocuklarımız yanımızda, kedilerimiz çoktan uyumuş…<br>
+      Sen yine bana sarılmışsın.<br>
+      Ve ben, hikâyenin en güzel yerinde sana bakıyorum.
+    </div>
+    <button class="bedtime-world-continue" id="continueToSleepMemory" type="button">Devam Et <span aria-hidden="true">→</span></button>
+  </div>
+</div>
+<div class="sleep-memory-world" id="sleepMemoryWorld" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="sleepMemoryWorldTitle">
+  <div class="sleep-memory-frames">
+    <img class="sleep-memory-frame is-active" src="assets/seni-uyuturken-1.webp" alt="Şevval başını Furkan'ın kucağına koymuş şekilde huzurla uzanıyor">
+    <img class="sleep-memory-frame" src="assets/seni-uyuturken-2.webp" alt="Furkan Şevval'in saçlarını okşarken Şevval gözlerini kapatıyor">
+    <img class="sleep-memory-frame" src="assets/seni-uyuturken-3.webp" alt="Furkan uyuyan Şevval'i alnından öpüyor">
+  </div>
+  <div class="sleep-memory-shade" aria-hidden="true"></div>
+  <div class="sleep-memory-dream-dim" aria-hidden="true"></div>
+  <div class="sleep-memory-snow" aria-hidden="true"></div>
+  <button class="sleep-memory-back" id="backToBedtimeTale" type="button"><span aria-hidden="true">←</span> Masala Dön</button>
+  <button class="sleep-memory-close" id="closeSleepMemory" type="button" aria-label="Sahneyi kapat">×</button>
+  <div class="sleep-memory-copy">
+    <p>SADECE İKİMİZ</p>
+    <h2 id="sleepMemoryWorldTitle">Seni Uyuturken</h2>
+    <div class="sleep-memory-story" id="sleepMemoryStory">Başını kucağıma koyduğunda bütün dünya biraz daha sessiz olurdu.</div>
+    <p class="sleep-memory-whisper" id="sleepMemoryWhisper" aria-live="polite">“Buradayım…”</p>
+    <div class="sleep-memory-dots" aria-label="Etkileşim ilerlemesi"><i class="is-active"></i><i></i><i></i><i></i></div>
+    <button class="sleep-memory-action" id="sleepMemoryAction" type="button">Saçlarını Okşa</button>
+    <small class="sleep-memory-gesture">Butona dokun veya görseli aşağı kaydır</small>
+    <p class="sleep-memory-final" id="sleepMemoryFinal" hidden>Sen uyurken bile sana bakmak, gecenin en güzel hikâyesiydi.</p>
+  </div>
+</div>
+<div aria-hidden="true" class="bottom-nav" id="bottomNav"><button class="active" data-go="home"><span>⌂</span><small>Ana Sayfa</small></button><button data-go="littleSevval"><span>▧</span><small>Anılar</small></button><button class="nav-heart" data-go="chat"><span>✦</span></button><button data-go="message"><span>✉</span><small>Mesaj</small></button></div>
+<div aria-hidden="true" class="photo-modal" id="photoModal"><button id="closePhoto">×</button><div class="photo-stage"><img alt="Büyütülmüş fotoğraf" id="modalPhoto" src=""/><div class="photo-note"><p id="photoNote"></p></div></div></div>
+<div aria-hidden="true" class="experience-modal" id="experienceModal"><div class="experience-sheet"><button class="sheet-close" id="sheetClose">×</button><div id="sheetContent"></div></div></div>
+<div class="final-notification" id="finalNotification" aria-hidden="true"><div class="final-note-card"><button class="final-note-close" id="dismissNotification" aria-label="Kapat">×</button><div class="final-note-orbit"><span>♡</span></div><small>SENİN İÇİN SON BİR NOT</small><h3>Gitmeden önce...</h3><p>Sana söylemek istediğim küçücük ama içten bir şey kaldı.</p><button class="final-note-open" id="notificationCard">Mesajı aç <span>→</span></button><button class="final-note-later" id="notificationLater">Biraz daha burada kal</button></div></div>
+<div class="final-screen" id="finalScreen"><button id="closeFinal" aria-label="Kapat">×</button><div class="final-screen-inner final-letter"><small>SON BİR ŞEY DAHA...</small><h2>Bütün şarkılar bitti…<br><em>ama sana söyleyeceklerim bitmedi.</em></h2><p>Buraya kadar gördüğün her şey, seni düşündüğüm küçük anlardan oluştu. Bazısını yazarken güldüm, bazısında durup seni özledim.</p><p>Belki kusursuz olmadı… Ama içindeki her cümlede, her fotoğrafta ve her şarkıda gerçekten ben vardım. Çünkü sana sıradan bir doğum günü mesajı bırakmak istemedim. Bir gün yeniden açtığında, bugün seni ne kadar sevdiğimi tekrar hissedebileceğin bir yer bırakmak istedim.</p><p>Hayatıma bir günlüğüne girdiğini sandığım kişi, fark etmeden yarınlarımın içine yerleşti. Şimdi güzel bir şey yaşadığımda anlatmak istediğim, yorulduğumda sesini aradığım, geleceği düşündüğümde yanımda hayal ettiğim kişi sensin.</p><p>İyi ki o garip tesadüf bizi birbirimize getirmiş.<br>İyi ki ne yaşarsak yaşayalım birbirimizden tamamen kopamamışız.<br>Ve iyi ki bugün, seni sevdiğimi söyleyebildiğim bir hayatın içindeyim.</p><div class="final-big-heart navy-heart">♥</div><div class="final-petnames"><b>İyi ki doğdun yavrummmmmm…</b><br><b>İyi ki doğdun bitanemmmmm…</b><br><b>İyi ki doğdun kelebeğimmmmm…</b></div><p class="final-love">Seni çok ama çok seviyorummmmmmmm…</p><em class="final-signature">— Furkan</em>
+<section class="lily-print-gift" aria-labelledby="lilyPrintTitle">
+  <div class="lily-print-mark" aria-hidden="true"><span>✦</span></div>
+  <small>EKRANDAN ELLERİNE AÇAN BİR ZAMBAK</small>
+  <h3 id="lilyPrintTitle">Sana buradan çıkıp<br><em>ellerine ulaşacak bir çiçek bıraktım.</em></h3>
+  <p>Madem evine hediye gönderemiyorum, madem sana hediye kabul ettiremiyorum… O hâlde ben rahat durur muyum? Durmam. Eğer hazırlamak istersen —ki sen böyle şeyleri çok seviyorsun bitanem— gerçekten sana hediyem olsun bu. Belki görünce şok olacaksın ama inşallah tam istediğim gibi olur ve odanda çok güzel durur.</p>
+  <div class="lily-choice-grid" aria-label="Çiçek şablonu seçenekleri">
+    <article class="lily-choice-card easy">
+      <small>8–12 DAKİKA • ÇOK KOLAY</small>
+      <h4>Kolay Çiçek</h4>
+      <p>Dört büyük parça. Hızlı hazırlanır; sevimli bir el yapımı çiçek gibi görünür.</p>
+      <a class="lily-download-button" href="assets/sevval-kolay-cicek.pdf" target="_blank" rel="noopener">Kolay olanı aç <b>↓</b></a>
+    </article>
+    <article class="lily-choice-card detailed">
+      <small>25–35 DAKİKA • DAHA ŞIK</small>
+      <h4>Detaylı Zambak</h4>
+      <p>Biraz daha uğraştırır; daha hacimli, gerçekçi ve zambağa daha yakın görünür.</p>
+      <a class="lily-download-button" href="assets/sevval-detayli-zambak.pdf" target="_blank" rel="noopener">Detaylı olanı aç <b>↓</b></a>
+    </article>
+  </div>
+  <div class="lily-phone-guide">
+    <h4>Telefonundan nasıl alacaksın?</h4>
+    <ol>
+      <li><b>Şablonu aç.</b><span>Yukarıdaki düğmeye dokun. Tek sayfalık PDF, Chrome’da açılacak.</span></li>
+      <li><b>Telefonuna kaydet.</b><span>PDF ekranındaki indirme simgesine dokun. Dosya telefonundaki <strong>İndirilenler</strong> klasörüne gelecek.</span></li>
+      <li><b>Yazdır veya gönder.</b><span>Yazıcın varsa üç nokta menüsünden <strong>Yazdır</strong> seç. Yoksa paylaş simgesiyle PDF’yi bir kırtasiyeye WhatsApp’tan gönderebilirsin.</span></li>
+    </ol>
+  </div>
+  <div class="lily-print-quality">
+    <h4>Hangisini seçmelisin?</h4>
+    <div class="lily-materials"><b>İkisinde de PDF’nin içinde her şey var:</b><span>Kesilecek şablon, gerekli malzemeler, adım adım yapılış, yaklaşık süre ve bittiğinde nasıl görüneceğini gösteren örnek bulunuyor.</span></div>
+    <details class="lily-option-details">
+      <summary>Kolay çiçeğin yapılışını burada gör</summary>
+      <ol class="lily-build-steps">
+        <li><b>Sayfayı yazdır.</b><span>A4, renkli ve %100 gerçek boyutta yazdır.</span></li>
+        <li><b>Dört büyük şekli kes.</b><span>Tek parça pembe çiçeği, yeşil gövdeyi ve iki yeşil yaprağı dış kenarlarından kes.</span></li>
+        <li><b>Pembe uçları kıvır.</b><span>Altı pembe ucu kurşun kalemin çevresine bir kez sarıp bırak.</span></li>
+        <li><b>Gövdeyi sar.</b><span>Yeşil dikdörtgeni kaleme sarıp sarı kenarından yapıştır; sonra kalemi çıkar.</span></li>
+        <li><b>Birleştir.</b><span>Çiçeği üste, iki yeşil yaprağı yanlara yapıştırıp kurumaya bırak.</span></li>
+      </ol>
+    </details>
+    <details class="lily-option-details">
+      <summary>Detaylı zambağın yapılışını burada gör</summary>
+      <ol class="lily-build-steps">
+        <li><b>Parçaları kes.</b><span>Altı pembe çiçek yaprağını, yeşil gövdeyi, iki yeşil yaprağı, yuvarlak tabanı ve altı ince orta parçasını dış çizgilerinden kes.</span></li>
+        <li><b>Pembe parçaları şekillendir.</b><span>Altlarındaki kısa çizgiyi kes; iki küçük ucu üst üste yapıştırıp üstlerini kalemle dışa kıvır.</span></li>
+        <li><b>İlk üçünü yerleştir.</b><span>Üç pembe parçayı yuvarlak tabana, eşit aralıklarla yapıştır.</span></li>
+        <li><b>Diğer üçünü ekle.</b><span>Kalanları boşluklara yapıştırarak çiçeği dolgunlaştır.</span></li>
+        <li><b>Ortayı ve gövdeyi tamamla.</b><span>Altı ince parçayı ortaya koy; yeşil gövdeyi sarıp çiçeği üste, yaprakları yanlara yapıştır.</span></li>
+        <li><b>Kurumasını bekle.</b><span>Dik konumda yaklaşık 20 dakika bekletip pembe uçları son kez dışa doğru aç.</span></li>
+      </ol>
+    </details>
+  </div>
+  <p class="lily-print-note">Birleştirdiğinde, sana hazırladığım bu küçük dünyanın bir parçası gerçekten ellerinde olacak.</p>
+</section>
+</div></div>
+<aside class="now-playing" id="nowPlaying" aria-live="polite" aria-label="Şu an çalan şarkı" hidden>
+  <img id="nowPlayingCover" alt="" src="">
+  <div class="now-playing-copy">
+    <small><i></i> ŞU AN ÇALIYOR</small>
+    <strong id="nowPlayingTitle">Lovesong</strong>
+    <span id="nowPlayingArtist">Adele</span>
+  </div>
+  <div class="now-playing-bars" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+</aside>
+<audio id="audio" preload="metadata" src="assets/its-snowing-best-part.mp3"></audio>
+<audio id="sleepMemorySong" preload="auto" src="assets/adele-lovesong.mp3"></audio>
+<script src="script.js"></script>
+<script src="music-demo.js"></script>
+</body></html>

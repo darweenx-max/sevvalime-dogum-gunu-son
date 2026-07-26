@@ -1,0 +1,16 @@
+GITHUB'A YÜKLEME
+================
+
+1. Bu ZIP dosyasını bilgisayarında "Tümünü Ayıkla" seçeneğiyle aç.
+2. Açılan klasörün içindeki dosyaları yükle:
+   index.html, style.css, script.js, music-demo.js, manifest.webmanifest,
+   README.txt, GITHUBA-YUKLEME.txt ve assets klasörü.
+3. ZIP dosyasının kendisini GitHub'a yükleme. GitHub Pages ZIP'i açmaz.
+4. GitHub deposunda Add file > Upload files bölümünü aç.
+5. Ayıklanan klasörün İÇİNDEKİ tüm dosya ve klasörleri yükleme alanına sürükle.
+6. Alttaki Commit changes düğmesine bas.
+
+ÖNEMLİ:
+- index.html depo ana dizininde görünmelidir.
+- assets klasörünün iç yapısını değiştirme.
+- Bu sürümde hiçbir tekil dosya GitHub'ın tarayıcı yükleme sınırına yaklaşmaz.
