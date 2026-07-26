@@ -925,9 +925,9 @@ const canvas=document.querySelector('#stars'),ctx=canvas.getContext('2d');let st
  const playlist=[
    {artist:'Carla Morrison',title:'Disfruto',src:'assets/carla-morrison-disfruto.mp4'},
    {artist:'BLOK3',title:'Sebebi Yar',src:'assets/blok3-sebebi-yar.mp4'},
-   {artist:'Redd',title:'Kozmos',src:'assets/redd-kozmos-lyric.mp4'},
-   {artist:'Boramess',title:'Bizden Olsun İsterdim',src:'assets/boramess-bizden-olsun-isterdim.mp4'},
-   {artist:'Model',title:'Ölürüm Daha İyi',src:'assets/model-olurum-daha-iyi.mp4'}
+   {artist:'Yaşlı Amca',title:'Ve Ben',src:'assets/yasli-amca-ve-ben.mp4'},
+   {artist:'Can Ozan',title:'Sar Bu Şehri',src:'assets/can-ozan-sar-bu-sehri.mp4'},
+   {artist:'Motive',title:'Yin Yang',src:'assets/motive-yin-yang.mp4'}
  ];
  let trackIndex=0;
  const pageAudio=[document.querySelector('#audio'),document.querySelector('#sleepMemorySong')].filter(Boolean);
