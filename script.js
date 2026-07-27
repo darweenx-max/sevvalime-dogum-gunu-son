@@ -925,8 +925,7 @@ const canvas=document.querySelector('#stars'),ctx=canvas.getContext('2d');let st
  const playlist=[
    {artist:'Carla Morrison',title:'Disfruto',src:'assets/carla-morrison-disfruto.mp4'},
    {artist:'BLOK3',title:'Sebebi Yar',src:'assets/blok3-sebebi-yar.mp4'},
-   {artist:'Yaşlı Amca',title:'Ve Ben',src:'assets/yasli-amca-ve-ben.mp4'},
-   {artist:'Can Ozan',title:'Sar Bu Şehri',src:'assets/can-ozan-sar-bu-sehri.mp4'},
+   {artist:'Ati242',title:'Değişmene Rağmen',src:'assets/ati242-degismene-ragmen.mp4'},
    {artist:'Motive',title:'Yin Yang',src:'assets/motive-yin-yang.mp4'}
  ];
  let trackIndex=0;
