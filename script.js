@@ -828,7 +828,23 @@ const canvas=document.querySelector('#stars'),ctx=canvas.getContext('2d');let st
  const finaleClose=document.querySelector('#closePortraitAlbumFinale');
  cards.forEach(()=>albumProgress?.appendChild(document.createElement('i')));
  const albumProgressItems=[...(albumProgress?.children||[])];
- let activePhotoIndex=0,touchStartX=0,modalLastTap=0;
+ let activePhotoIndex=0,touchStartX=0,modalLastTap=0,photoLockScrollY=0,swipeStartX=null,swipeStartY=null,swipeLocked=false,swipeIntent='';
+ const lockPhotoBody=()=>{
+  photoLockScrollY=window.scrollY||window.pageYOffset||0;
+  document.body.style.position='fixed';
+  document.body.style.top=`-${photoLockScrollY}px`;
+  document.body.style.left='0';
+  document.body.style.right='0';
+  document.body.style.width='100%';
+ };
+ const unlockPhotoBody=()=>{
+  document.body.style.position='';
+  document.body.style.top='';
+  document.body.style.left='';
+  document.body.style.right='';
+  document.body.style.width='';
+  window.scrollTo(0,photoLockScrollY||0);
+ };
  const showPhoto=index=>{
   if(!photoModal)return;
   activePhotoIndex=Math.max(0,Math.min(index,cards.length));
@@ -850,6 +866,7 @@ const canvas=document.querySelector('#stars'),ctx=canvas.getContext('2d');let st
   photoModal.classList.add('show');
   photoModal.setAttribute('aria-hidden','false');
   document.body.classList.add('cinematic-photo-open');
+  lockPhotoBody();
  };
  startButton?.addEventListener('click',()=>showPhoto(0));
  const hidePhoto=()=>{
@@ -857,6 +874,7 @@ const canvas=document.querySelector('#stars'),ctx=canvas.getContext('2d');let st
   photoModal?.classList.remove('show-finale');
   photoModal?.setAttribute('aria-hidden','true');
   document.body.classList.remove('cinematic-photo-open');
+  unlockPhotoBody();
  };
  photoModalClose?.addEventListener('click',hidePhoto);
  finaleClose?.addEventListener('click',hidePhoto);
@@ -871,23 +889,39 @@ const canvas=document.querySelector('#stars'),ctx=canvas.getContext('2d');let st
   }
   modalLastTap=now;
  });
- let swipeStartX=null,swipeStartY=null;
  const swipeStart=e=>{
   const point=e.touches?.[0]||e;
   swipeStartX=point.clientX;swipeStartY=point.clientY;
+  swipeLocked=true;swipeIntent='';
+ };
+ const swipeMove=e=>{
+  if(swipeStartX==null)return;
+  const point=e.touches?.[0]||e;
+  const dx=point.clientX-swipeStartX;
+  const dy=point.clientY-swipeStartY;
+  if(!swipeIntent){
+   if(Math.abs(dx)>10||Math.abs(dy)>10){
+    swipeIntent=Math.abs(dx)>Math.abs(dy)?'horizontal':'vertical';
+   }
+  }
+  if(swipeIntent==='horizontal'){
+   e.preventDefault();
+  }
  };
  const swipeEnd=e=>{
   if(swipeStartX==null)return;
   const point=e.changedTouches?.[0]||e;
   const dx=point.clientX-swipeStartX;
   const dy=point.clientY-swipeStartY;
-  swipeStartX=null;swipeStartY=null;
-  if(Math.abs(dx)>24&&Math.abs(dx)>Math.abs(dy)*1.05){
+  swipeStartX=null;swipeStartY=null;swipeLocked=false;
+  if(Math.abs(dx)>34&&Math.abs(dx)>Math.abs(dy)*1.08){
    showPhoto(activePhotoIndex+(dx<0?1:-1));
   }
  };
  photoModalFrame?.addEventListener('touchstart',swipeStart,{passive:true});
+ photoModalFrame?.addEventListener('touchmove',swipeMove,{passive:false});
  photoModalFrame?.addEventListener('touchend',swipeEnd,{passive:true});
+ photoModalFrame?.addEventListener('touchcancel',swipeEnd,{passive:true});
  document.addEventListener('keydown',e=>{
   if(!photoModal?.classList.contains('show'))return;
   if(e.key==='Escape')hidePhoto();

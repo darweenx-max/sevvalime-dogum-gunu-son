@@ -3481,3 +3481,84 @@ input,textarea,select,button{font-size:16px}
   .retro-tv-screen{max-height:66dvh!important}
   .cassette-copy{margin-bottom:12px!important}
 }
+
+
+/* === Mobil fotoğraf albümü son düzeltme === */
+body.cinematic-photo-open{
+  overflow:hidden!important;
+  overscroll-behavior:none!important;
+  touch-action:none!important;
+}
+.cinematic-photo-modal{
+  overscroll-behavior:contain!important;
+}
+.cinematic-photo-stage,
+.cinematic-photo-frame{
+  overscroll-behavior:contain!important;
+}
+@media (max-width: 1024px){
+  .cinematic-photo-modal{
+    display:flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+    overflow:hidden!important;
+    padding:56px 14px 24px!important;
+  }
+  .cinematic-photo-stage{
+    width:min(100%, 560px)!important;
+    max-width:calc(100vw - 92px)!important;
+    margin:0 auto!important;
+    position:relative!important;
+    z-index:3!important;
+  }
+  .cinematic-photo-frame{
+    width:100%!important;
+    max-width:100%!important;
+    touch-action:none!important;
+    user-select:none!important;
+    -webkit-user-select:none!important;
+    -webkit-touch-callout:none!important;
+  }
+  .cinematic-photo-frame img{
+    width:100%!important;
+    max-height:67dvh!important;
+    object-fit:contain!important;
+    user-select:none!important;
+    -webkit-user-drag:none!important;
+    pointer-events:none!important;
+  }
+  .cinematic-photo-nav{
+    display:flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+    position:fixed!important;
+    top:50%!important;
+    transform:translateY(-50%)!important;
+    z-index:10005!important;
+    width:48px!important;
+    height:78px!important;
+    min-width:48px!important;
+    min-height:78px!important;
+    border-radius:18px!important;
+    background:rgba(5,11,27,.94)!important;
+    border:1px solid rgba(232,204,139,.58)!important;
+    color:#f6e8c8!important;
+    box-shadow:0 10px 34px rgba(0,0,0,.42)!important;
+    opacity:1!important;
+    visibility:visible!important;
+    pointer-events:auto!important;
+    font-size:38px!important;
+    line-height:1!important;
+    padding:0!important;
+  }
+  .cinematic-photo-prev{left:8px!important;right:auto!important;}
+  .cinematic-photo-next{right:8px!important;left:auto!important;}
+  .cinematic-photo-nav:disabled{opacity:.28!important;pointer-events:none!important;}
+  .cinematic-photo-modal.show-finale .cinematic-photo-nav{display:none!important;}
+}
+@media (max-width: 520px){
+  .cinematic-photo-stage{max-width:calc(100vw - 84px)!important;}
+  .cinematic-photo-nav{width:42px!important;height:70px!important;min-width:42px!important;min-height:70px!important;font-size:34px!important;}
+  .cinematic-photo-prev{left:6px!important;}
+  .cinematic-photo-next{right:6px!important;}
+}
