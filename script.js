@@ -882,7 +882,7 @@ const canvas=document.querySelector('#stars'),ctx=canvas.getContext('2d');let st
   const dx=point.clientX-swipeStartX;
   const dy=point.clientY-swipeStartY;
   swipeStartX=null;swipeStartY=null;
-  if(Math.abs(dx)>36&&Math.abs(dx)>Math.abs(dy)*1.15){
+  if(Math.abs(dx)>24&&Math.abs(dx)>Math.abs(dy)*1.05){
    showPhoto(activePhotoIndex+(dx<0?1:-1));
   }
  };
@@ -1717,10 +1717,10 @@ function getSevvalUniqueReward(){
   timeButton.disabled = true;
   timeButton.innerHTML = '<span>⌛</span> Zaman durdu';
 
-  // Kart içindeki eski mesajı da açık tutuyoruz; masaüstünde sahne kapandıktan sonra kısa süre görünür.
-  timeMessage.classList.add('is-open');
-  timeMessage.setAttribute('aria-hidden', 'false');
-  timeLine.textContent = lines[0];
+  // Tek sahne kullan: mobilde alttaki kart mesajı ile üst üste binmesin.
+  timeMessage.classList.remove('is-open');
+  timeMessage.setAttribute('aria-hidden', 'true');
+  timeLine.textContent = '';
 
   overlayLine.textContent = lines[0];
   overlayLine.classList.remove('is-changing');
@@ -1729,32 +1729,26 @@ function getSevvalUniqueReward(){
 
   overlayProgress.style.transition = 'none';
   overlayProgress.style.width = '0';
-  timeProgress.style.transition = 'none';
-  timeProgress.style.width = '0';
   void overlayProgress.offsetWidth;
-  overlayProgress.style.transition = 'width 8.4s linear';
+  overlayProgress.style.transition = 'width 10.15s linear';
   overlayProgress.style.width = '100%';
-  timeProgress.style.transition = 'width 8.4s linear';
-  timeProgress.style.width = '100%';
 
   if (navigator.vibrate) navigator.vibrate([45, 40, 70]);
 
+  const lineDelay = 1450;
   lines.slice(1).forEach((line, index) => {
    later(() => {
     overlayLine.classList.add('is-changing');
-    timeLine.style.opacity = '0';
     later(() => {
      overlayLine.textContent = line;
      overlayLine.classList.remove('is-changing');
-     timeLine.textContent = line;
-     timeLine.style.opacity = '1';
-    }, 180);
-   }, (index + 1) * 1200);
+    }, 320);
+   }, (index + 1) * lineDelay);
   });
 
   later(() => {
    closeTimeScene();
-  }, 8800);
+  }, (lines.length * lineDelay) + 900);
  });
 })();
 
