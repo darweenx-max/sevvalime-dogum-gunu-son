@@ -3171,3 +3171,74 @@ body.cassette-open .now-playing,body.cassette-open .bottom-nav{opacity:0!importa
 @keyframes vhsTrack{0%{transform:translateY(0)}100%{transform:translateY(820%)}}
 @keyframes vhsWarp{0%,100%{transform:scale(1) translateX(0)}48%{transform:scaleY(1.002) translateX(0)}50%{transform:scaleY(.998) translateX(-1px)}52%{transform:scaleY(1.002) translateX(1px)}}
 @media(max-width:900px){.retro-tv-screen video{transform:scale(.99)!important}.retro-tv-screen-wrap::before{inset:14px}.retro-tv-screen .vhs-tracking{height:20%}}
+
+
+/* === Fotoğraf albümü geçiş ve zaman durdurma düzeltmesi === */
+@media(max-width:650px){
+  .cinematic-photo-modal{
+    display:grid!important;
+    grid-template-columns:54px minmax(0,1fr) 54px!important;
+    padding:58px 6px 24px!important;
+  }
+  .cinematic-photo-stage{grid-column:2;width:100%;min-width:0}
+  .cinematic-photo-nav{
+    display:grid!important;
+    place-items:center;
+    position:relative;
+    z-index:6;
+    width:46px!important;
+    height:68px!important;
+    padding:0!important;
+    margin:auto!important;
+    border-radius:18px!important;
+    background:rgba(5,11,27,.78)!important;
+    border:1px solid rgba(232,204,139,.42)!important;
+    box-shadow:0 8px 26px rgba(0,0,0,.34);
+    color:#f6e8c8!important;
+    font-size:36px!important;
+    line-height:1!important;
+    -webkit-tap-highlight-color:transparent;
+    touch-action:manipulation;
+  }
+  .cinematic-photo-prev{grid-column:1;grid-row:1}
+  .cinematic-photo-next{grid-column:3;grid-row:1}
+  .cinematic-photo-modal.show-finale .cinematic-photo-nav{visibility:hidden;pointer-events:none}
+  .cinematic-photo-frame{touch-action:pan-y}
+}
+.cinematic-photo-nav:disabled{opacity:.32;pointer-events:none}
+
+.time-freeze-resume{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  margin:17px auto 0;
+  min-width:190px;
+  min-height:44px;
+  padding:12px 19px;
+  border:1px solid rgba(233,207,145,.48);
+  border-radius:999px;
+  background:linear-gradient(135deg,rgba(233,207,145,.18),rgba(91,122,174,.16));
+  color:#f8edcf;
+  font:700 13px/1 Arial,sans-serif;
+  letter-spacing:.03em;
+  cursor:pointer;
+  touch-action:manipulation;
+}
+.time-freeze-resume:active{transform:scale(.97)}
+body.time-is-frozen::before{
+  content:"⌛  SAYAÇ DURDU";
+  position:fixed;
+  z-index:122;
+  left:50%;
+  top:max(10px,env(safe-area-inset-top));
+  transform:translateX(-50%);
+  padding:8px 13px;
+  border:1px solid rgba(231,207,150,.26);
+  border-radius:999px;
+  background:rgba(3,10,23,.82);
+  backdrop-filter:blur(12px);
+  color:#eedaa5;
+  font:800 9px/1 Arial,sans-serif;
+  letter-spacing:.15em;
+  pointer-events:none;
+}

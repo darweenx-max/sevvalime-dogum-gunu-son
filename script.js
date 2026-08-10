@@ -871,11 +871,23 @@ const canvas=document.querySelector('#stars'),ctx=canvas.getContext('2d');let st
   }
   modalLastTap=now;
  });
- photoModal?.addEventListener('touchstart',e=>{touchStartX=e.changedTouches[0].clientX},{passive:true});
- photoModal?.addEventListener('touchend',e=>{
-  const distance=e.changedTouches[0].clientX-touchStartX;
-  if(Math.abs(distance)>48)showPhoto(activePhotoIndex+(distance<0?1:-1));
- },{passive:true});
+ let swipeStartX=null,swipeStartY=null;
+ const swipeStart=e=>{
+  const point=e.touches?.[0]||e;
+  swipeStartX=point.clientX;swipeStartY=point.clientY;
+ };
+ const swipeEnd=e=>{
+  if(swipeStartX==null)return;
+  const point=e.changedTouches?.[0]||e;
+  const dx=point.clientX-swipeStartX;
+  const dy=point.clientY-swipeStartY;
+  swipeStartX=null;swipeStartY=null;
+  if(Math.abs(dx)>36&&Math.abs(dx)>Math.abs(dy)*1.15){
+   showPhoto(activePhotoIndex+(dx<0?1:-1));
+  }
+ };
+ photoModalFrame?.addEventListener('touchstart',swipeStart,{passive:true});
+ photoModalFrame?.addEventListener('touchend',swipeEnd,{passive:true});
  document.addEventListener('keydown',e=>{
   if(!photoModal?.classList.contains('show'))return;
   if(e.key==='Escape')hidePhoto();
@@ -1520,6 +1532,7 @@ function getSevvalUniqueReward(){
  const overlay = document.querySelector('#timeFreezeOverlay');
  const overlayLine = document.querySelector('#timeFreezeLine');
  const overlayProgress = document.querySelector('#timeFreezeProgress');
+ const timeResume = document.querySelector('#timeFreezeResume');
  const freezeDays = document.querySelector('#freezeDays');
  const freezeHours = document.querySelector('#freezeHours');
  const freezeMinutes = document.querySelector('#freezeMinutes');
@@ -1692,6 +1705,7 @@ function getSevvalUniqueReward(){
   timeMessage.classList.remove('is-open');
   timeMessage.setAttribute('aria-hidden', 'true');
  };
+ timeResume?.addEventListener('click', closeTimeScene);
 
  timeButton.addEventListener('click', () => {
   if (running) return;
@@ -1739,18 +1753,7 @@ function getSevvalUniqueReward(){
   });
 
   later(() => {
-   overlay.classList.remove('is-open');
-   overlay.setAttribute('aria-hidden', 'true');
-   document.body.classList.remove('time-overlay-open');
-   window.__loveCounterPaused = false;
-   document.body.classList.remove('time-is-frozen');
-   timeButton.disabled = false;
-   timeButton.innerHTML = '<span>⌛</span> Bir daha durdur';
-   running = false;
-   later(() => {
-    timeMessage.classList.remove('is-open');
-    timeMessage.setAttribute('aria-hidden', 'true');
-   }, 1200);
+   closeTimeScene();
   }, 8800);
  });
 })();
