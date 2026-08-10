@@ -825,6 +825,10 @@ const canvas=document.querySelector('#stars'),ctx=canvas.getContext('2d');let st
  const albumProgress=document.querySelector('#portraitAlbumProgress');
  const albumHeart=document.querySelector('#portraitAlbumHeart');
  const photoModalFrame=photoModal?.querySelector('.cinematic-photo-frame');
+ const photoTapLeft=document.querySelector('#photoTapLeft');
+ const photoTapRight=document.querySelector('#photoTapRight');
+ const photoPrevBottom=document.querySelector('#cinematicPhotoPrevBottom');
+ const photoNextBottom=document.querySelector('#cinematicPhotoNextBottom');
  const finaleClose=document.querySelector('#closePortraitAlbumFinale');
  cards.forEach(()=>albumProgress?.appendChild(document.createElement('i')));
  const albumProgressItems=[...(albumProgress?.children||[])];
@@ -863,10 +867,15 @@ const canvas=document.querySelector('#stars'),ctx=canvas.getContext('2d');let st
   });
   if(photoModalPrev)photoModalPrev.disabled=activePhotoIndex===0;
   if(photoModalNext)photoModalNext.disabled=isFinale;
+  if(photoPrevBottom)photoPrevBottom.disabled=activePhotoIndex===0;
+  if(photoNextBottom)photoNextBottom.disabled=isFinale;
+  if(photoTapLeft)photoTapLeft.disabled=activePhotoIndex===0;
+  if(photoTapRight)photoTapRight.disabled=isFinale;
+  const wasAlreadyOpen=photoModal.classList.contains('show');
   photoModal.classList.add('show');
   photoModal.setAttribute('aria-hidden','false');
   document.body.classList.add('cinematic-photo-open');
-  lockPhotoBody();
+  if(!wasAlreadyOpen) lockPhotoBody();
  };
  startButton?.addEventListener('click',()=>showPhoto(0));
  const hidePhoto=()=>{
@@ -878,8 +887,14 @@ const canvas=document.querySelector('#stars'),ctx=canvas.getContext('2d');let st
  };
  photoModalClose?.addEventListener('click',hidePhoto);
  finaleClose?.addEventListener('click',hidePhoto);
- photoModalPrev?.addEventListener('click',()=>showPhoto(activePhotoIndex-1));
- photoModalNext?.addEventListener('click',()=>showPhoto(activePhotoIndex+1));
+ const goPrevPhoto=()=>showPhoto(activePhotoIndex-1);
+ const goNextPhoto=()=>showPhoto(activePhotoIndex+1);
+ photoModalPrev?.addEventListener('click',goPrevPhoto);
+ photoModalNext?.addEventListener('click',goNextPhoto);
+ photoPrevBottom?.addEventListener('click',goPrevPhoto);
+ photoNextBottom?.addEventListener('click',goNextPhoto);
+ photoTapLeft?.addEventListener('click',goPrevPhoto);
+ photoTapRight?.addEventListener('click',goNextPhoto);
  photoModal?.addEventListener('click',e=>{if(e.target===photoModal)hidePhoto()});
  photoModalFrame?.addEventListener('click',()=>{
   const now=Date.now();
@@ -889,39 +904,7 @@ const canvas=document.querySelector('#stars'),ctx=canvas.getContext('2d');let st
   }
   modalLastTap=now;
  });
- const swipeStart=e=>{
-  const point=e.touches?.[0]||e;
-  swipeStartX=point.clientX;swipeStartY=point.clientY;
-  swipeLocked=true;swipeIntent='';
- };
- const swipeMove=e=>{
-  if(swipeStartX==null)return;
-  const point=e.touches?.[0]||e;
-  const dx=point.clientX-swipeStartX;
-  const dy=point.clientY-swipeStartY;
-  if(!swipeIntent){
-   if(Math.abs(dx)>10||Math.abs(dy)>10){
-    swipeIntent=Math.abs(dx)>Math.abs(dy)?'horizontal':'vertical';
-   }
-  }
-  if(swipeIntent==='horizontal'){
-   e.preventDefault();
-  }
- };
- const swipeEnd=e=>{
-  if(swipeStartX==null)return;
-  const point=e.changedTouches?.[0]||e;
-  const dx=point.clientX-swipeStartX;
-  const dy=point.clientY-swipeStartY;
-  swipeStartX=null;swipeStartY=null;swipeLocked=false;
-  if(Math.abs(dx)>34&&Math.abs(dx)>Math.abs(dy)*1.08){
-   showPhoto(activePhotoIndex+(dx<0?1:-1));
-  }
- };
- photoModalFrame?.addEventListener('touchstart',swipeStart,{passive:true});
- photoModalFrame?.addEventListener('touchmove',swipeMove,{passive:false});
- photoModalFrame?.addEventListener('touchend',swipeEnd,{passive:true});
- photoModalFrame?.addEventListener('touchcancel',swipeEnd,{passive:true});
+ // Mobilde kaydırma yerine dokunmalı geçiş kullanılıyor.
  document.addEventListener('keydown',e=>{
   if(!photoModal?.classList.contains('show'))return;
   if(e.key==='Escape')hidePhoto();
@@ -1465,7 +1448,7 @@ function getSevvalUniqueReward(){
  const progress=document.querySelector('#childhoodProgress');
  if(!openButton||!album||!pages.length)return;
 
- let pageIndex=0,startX=0;
+ let pageIndex=0;
  pages.forEach(()=>progress?.appendChild(document.createElement('i')));
  if(progress)progress.style.gridTemplateColumns=`repeat(${pages.length},1fr)`;
  const progressItems=[...(progress?.children||[])];
@@ -1495,12 +1478,6 @@ function getSevvalUniqueReward(){
  finishButton?.addEventListener('click',closeAlbum);
  previousButton?.addEventListener('click',()=>showPage(pageIndex-1));
  nextButton?.addEventListener('click',()=>showPage(pageIndex+1));
- album.addEventListener('pointerdown',event=>{startX=event.clientX});
- album.addEventListener('pointerup',event=>{
-  const distance=event.clientX-startX;
-  if(Math.abs(distance)<48)return;
-  showPage(pageIndex+(distance<0?1:-1));
- });
  document.addEventListener('keydown',event=>{
   if(!album.classList.contains('is-open'))return;
   if(event.key==='Escape')closeAlbum();

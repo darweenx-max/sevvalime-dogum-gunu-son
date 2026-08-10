@@ -199,9 +199,9 @@
  <div class="portrait-album-progress" id="portraitAlbumProgress" aria-hidden="true"></div>
  <button class="cinematic-photo-nav cinematic-photo-prev" id="cinematicPhotoPrev" type="button" aria-label="Önceki fotoğraf">‹</button>
  <figure class="cinematic-photo-stage">
-  <div class="cinematic-photo-frame"><img id="cinematicPhotoImage" src="" alt="Şevval'in büyütülmüş fotoğrafı"></div>
+  <div class="cinematic-photo-frame"><button class="photo-tap-zone photo-tap-left" id="photoTapLeft" type="button" aria-label="Önceki fotoğrafa geç"></button><img id="cinematicPhotoImage" src="" alt="Şevval'in büyütülmüş fotoğrafı"><button class="photo-tap-zone photo-tap-right" id="photoTapRight" type="button" aria-label="Sonraki fotoğrafa geç"></button></div>
   <span class="portrait-album-heart" id="portraitAlbumHeart" aria-hidden="true">♥</span>
-  <figcaption><small id="cinematicPhotoCount"></small><p id="cinematicPhotoCaption"></p><span>Sağa sola kaydırabilir ya da okları kullanabilirsin</span></figcaption>
+  <figcaption><small id="cinematicPhotoCount"></small><p id="cinematicPhotoCaption"></p><span>Aşağıdaki butonlarla fotoğraflar arasında geçebilirsin</span><div class="photo-mobile-controls"><button class="photo-mobile-btn" id="cinematicPhotoPrevBottom" type="button">‹ Önceki</button><button class="photo-mobile-btn" id="cinematicPhotoNextBottom" type="button">Sonraki ›</button></div></figcaption>
  </figure>
  <div class="portrait-album-finale">
   <small>EN GÜZEL HÂLLERİN</small>
@@ -226,7 +226,6 @@
 <div class="childhood-album" id="childhoodAlbum" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="childhoodAlbumTitle">
  <button class="childhood-close" id="closeChildhoodAlbum" type="button" aria-label="Albümü kapat">×</button>
  <div class="childhood-progress" id="childhoodProgress" aria-hidden="true"></div>
- <button class="childhood-nav childhood-prev" id="childhoodPrev" type="button" aria-label="Önceki fotoğraf">‹</button>
  <div class="childhood-pages" id="childhoodPages">
   <article class="childhood-page is-active"><figure><img src="assets/childhood/01-bebek.webp" alt="Bebek Şevval" loading="lazy"><figcaption><small>EN BAŞINDAN</small><p>Her şey, dünyaya gözlerini kapatıp huzurla uyuyan bu küçücük kızla başladı.</p></figcaption></figure></article>
   <article class="childhood-page"><figure><img src="assets/childhood/02-minik.webp" alt="Minik Şevval" loading="lazy"><figcaption><small>MİNİCİK BİR SEN</small><p>Daha o zamanlardan belliymiş; insanın içine işleyen o tatlı bakışların.</p></figcaption></figure></article>
@@ -257,8 +256,10 @@
   <article class="childhood-page grown-page"><figure><img src="assets/photos/15-lacivert-elbise.webp" alt="Bugünkü Şevval'in lacivert elbiseli fotoğrafı" loading="lazy"><figcaption><small>BUGÜNKÜ SEN</small><p>Ve bütün bu fotoğrafların sonunda… En sevdiğin renk, en sevdiğim insanın üzerinde. Çocukluğundan bugüne uzanan hikâyenin en güzel hâli.</p></figcaption></figure></article>
   <article class="childhood-page childhood-finale"><div><small>O KÜÇÜK KIZDAN BUGÜNKÜ SANA</small><h2 id="childhoodAlbumTitle">Geçmişindeki seni de,<br><em>bugünkü seni de seviyorum.</em></h2><p>Ben çocukluğunun hiçbir anında yanında değildim. Ama o küçük kızın büyüyüp karşıma çıkan hâlini tanıdım.<br><br>Şimdi eski fotoğraflarına baktığımda, sevdiğim insanın hikâyesinin nerede başladığını görüyorum.</p><strong>İyi ki o küçük kız büyümüş.<br>İyi ki bugünkü Şevval olmuş.<br>İyi ki bir gün benim hayatıma girmiş.</strong><button id="finishChildhoodAlbum" type="button">Hikâyeni kalbimde sakla</button></div></article>
  </div>
- <button class="childhood-nav childhood-next" id="childhoodNext" type="button" aria-label="Sonraki fotoğraf">›</button>
- <p class="childhood-swipe-hint">Kaydırarak anılarda ilerle</p>
+ <div class="childhood-controls" aria-label="Albüm fotoğraf kontrolleri">
+  <button class="childhood-nav childhood-prev" id="childhoodPrev" type="button" aria-label="Önceki fotoğraf">‹ Önceki</button>
+  <button class="childhood-nav childhood-next" id="childhoodNext" type="button" aria-label="Sonraki fotoğraf">Sonraki ›</button>
+ </div>
 </div>
 <section class="section message-section" id="message">
 <div aria-hidden="true" class="message-petals"></div>

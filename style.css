@@ -3562,3 +3562,300 @@ body.cinematic-photo-open{
   .cinematic-photo-prev{left:6px!important;}
   .cinematic-photo-next{right:6px!important;}
 }
+
+
+/* === Fotoğraf albümü: kaydırma yerine dokunmatik geçiş === */
+.cinematic-photo-frame{position:relative!important;overflow:hidden!important}
+.photo-tap-zone{
+  position:absolute;
+  top:0;bottom:0;
+  width:50%;
+  z-index:4;
+  border:0;
+  background:transparent;
+  cursor:pointer;
+  -webkit-tap-highlight-color:transparent;
+}
+.photo-tap-left{left:0}
+.photo-tap-right{right:0}
+.photo-mobile-controls{
+  display:flex;
+  gap:10px;
+  justify-content:center;
+  align-items:center;
+  margin-top:16px;
+  flex-wrap:wrap;
+}
+.photo-mobile-btn{
+  appearance:none;
+  border:1px solid rgba(232,204,139,.42);
+  background:rgba(7,13,28,.82);
+  color:#f7ead1;
+  border-radius:999px;
+  min-height:44px;
+  padding:12px 18px;
+  font:700 13px/1 Arial,sans-serif;
+  letter-spacing:.02em;
+  box-shadow:0 8px 24px rgba(0,0,0,.22);
+}
+.photo-mobile-btn:active{transform:scale(.97)}
+@media(min-width: 1025px){
+  .photo-mobile-controls{display:none}
+}
+@media(max-width:1024px){
+  .cinematic-photo-frame::before,
+  .cinematic-photo-frame::after{
+    position:absolute;
+    top:50%;
+    transform:translateY(-50%);
+    z-index:5;
+    color:rgba(255,245,218,.72);
+    font:700 28px/1 Arial,sans-serif;
+    pointer-events:none;
+    text-shadow:0 2px 8px rgba(0,0,0,.35);
+  }
+  .cinematic-photo-frame::before{content:'‹';left:12px}
+  .cinematic-photo-frame::after{content:'›';right:12px}
+  .cinematic-photo-nav{display:none!important}
+}
+
+
+/* === 2026-08-10: Fotoğraf albümü mobilde sade ve garanti geçiş === */
+@media (max-width:1024px){
+  body.cinematic-photo-open{
+    overflow:hidden!important;
+    overscroll-behavior:none!important;
+  }
+  .cinematic-photo-modal{
+    display:flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+    padding:58px 14px calc(102px + env(safe-area-inset-bottom))!important;
+    overflow:hidden!important;
+  }
+  .cinematic-photo-stage{
+    width:min(100%,560px)!important;
+    max-width:100%!important;
+    height:auto!important;
+    min-height:0!important;
+    margin:0 auto!important;
+    justify-content:center!important;
+  }
+  .cinematic-photo-frame{
+    width:100%!important;
+    max-width:100%!important;
+    max-height:56dvh!important;
+    touch-action:manipulation!important;
+  }
+  .cinematic-photo-frame img{
+    display:block!important;
+    width:auto!important;
+    max-width:100%!important;
+    height:auto!important;
+    max-height:calc(56dvh - 10px)!important;
+    object-fit:contain!important;
+    margin:auto!important;
+  }
+  /* Mobilde görünmez sağ/sol dokunma alanları kapalı: sadece net butonlar kullanılır. */
+  .photo-tap-zone,
+  .cinematic-photo-frame::before,
+  .cinematic-photo-frame::after,
+  .cinematic-photo-nav{
+    display:none!important;
+  }
+  .cinematic-photo-stage figcaption{
+    width:100%!important;
+    max-width:560px!important;
+    padding:14px 6px 0!important;
+  }
+  .cinematic-photo-stage figcaption p{
+    margin:7px auto 0!important;
+    font-size:clamp(16px,4.2vw,20px)!important;
+    line-height:1.35!important;
+    max-height:16dvh!important;
+    overflow:auto!important;
+    -webkit-overflow-scrolling:touch!important;
+  }
+  .cinematic-photo-stage figcaption>span{
+    display:none!important;
+  }
+  .photo-mobile-controls{
+    display:grid!important;
+    grid-template-columns:1fr 1fr!important;
+    gap:10px!important;
+    position:fixed!important;
+    left:max(12px,env(safe-area-inset-left))!important;
+    right:max(12px,env(safe-area-inset-right))!important;
+    bottom:max(12px,env(safe-area-inset-bottom))!important;
+    z-index:10030!important;
+    margin:0!important;
+    padding:10px!important;
+    border:1px solid rgba(232,204,139,.28)!important;
+    border-radius:20px!important;
+    background:rgba(3,8,20,.92)!important;
+    backdrop-filter:blur(14px)!important;
+    -webkit-backdrop-filter:blur(14px)!important;
+    box-shadow:0 12px 34px rgba(0,0,0,.42)!important;
+  }
+  .photo-mobile-btn{
+    width:100%!important;
+    min-width:0!important;
+    min-height:54px!important;
+    padding:12px 10px!important;
+    border-radius:15px!important;
+    border:1px solid rgba(232,204,139,.48)!important;
+    background:rgba(15,27,53,.98)!important;
+    color:#fff0cf!important;
+    font:800 14px/1 Arial,sans-serif!important;
+    letter-spacing:0!important;
+    touch-action:manipulation!important;
+    -webkit-tap-highlight-color:transparent!important;
+  }
+  .photo-mobile-btn:active{
+    transform:scale(.98)!important;
+  }
+  .photo-mobile-btn:disabled{
+    opacity:.32!important;
+    pointer-events:none!important;
+  }
+  .cinematic-photo-modal.show-finale .photo-mobile-controls{
+    display:none!important;
+  }
+}
+
+@media (max-width:420px){
+  .cinematic-photo-modal{
+    padding-left:10px!important;
+    padding-right:10px!important;
+  }
+  .cinematic-photo-frame{max-height:52dvh!important}
+  .cinematic-photo-frame img{max-height:calc(52dvh - 10px)!important}
+  .photo-mobile-controls{left:8px!important;right:8px!important;bottom:max(8px,env(safe-area-inset-bottom))!important}
+  .photo-mobile-btn{min-height:52px!important;font-size:13px!important}
+}
+
+
+/* === 2026-08-10: Küçük Şevval albümü — kaydırma yok, net Önceki/Sonraki butonları === */
+.childhood-album{
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:stretch!important;
+  justify-content:center!important;
+  grid-template-columns:none!important;
+  padding:58px 16px calc(92px + env(safe-area-inset-bottom))!important;
+}
+.childhood-pages{
+  flex:1 1 auto!important;
+  width:100%!important;
+  height:auto!important;
+  min-height:0!important;
+}
+.childhood-page{
+  padding:0!important;
+}
+.childhood-page figure{
+  width:min(100%,650px)!important;
+  max-height:100%!important;
+}
+.childhood-page figure img{
+  max-height:min(62dvh,620px)!important;
+}
+.childhood-swipe-hint{
+  display:none!important;
+}
+.childhood-controls{
+  position:fixed!important;
+  left:50%!important;
+  bottom:max(12px,env(safe-area-inset-bottom))!important;
+  transform:translateX(-50%)!important;
+  z-index:10020!important;
+  display:grid!important;
+  grid-template-columns:1fr 1fr!important;
+  gap:10px!important;
+  width:min(520px,calc(100vw - 24px))!important;
+  padding:10px!important;
+  border:1px solid rgba(232,204,139,.28)!important;
+  border-radius:20px!important;
+  background:rgba(3,8,20,.93)!important;
+  backdrop-filter:blur(14px)!important;
+  -webkit-backdrop-filter:blur(14px)!important;
+  box-shadow:0 12px 34px rgba(0,0,0,.42)!important;
+}
+.childhood-controls .childhood-nav{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  width:100%!important;
+  height:auto!important;
+  min-width:0!important;
+  min-height:54px!important;
+  margin:0!important;
+  padding:12px 14px!important;
+  border:1px solid rgba(232,204,139,.48)!important;
+  border-radius:15px!important;
+  background:rgba(15,27,53,.98)!important;
+  color:#fff0cf!important;
+  font:800 14px/1 Arial,sans-serif!important;
+  letter-spacing:0!important;
+  backdrop-filter:none!important;
+  -webkit-backdrop-filter:none!important;
+  touch-action:manipulation!important;
+  -webkit-tap-highlight-color:transparent!important;
+  cursor:pointer!important;
+}
+.childhood-controls .childhood-nav:active{
+  transform:scale(.98)!important;
+}
+.childhood-controls .childhood-nav:disabled{
+  opacity:.30!important;
+  pointer-events:none!important;
+}
+.childhood-finale{
+  padding-bottom:12px!important;
+}
+@media(max-width:650px){
+  .childhood-album{
+    padding:54px 10px calc(90px + env(safe-area-inset-bottom))!important;
+  }
+  .childhood-page figure img{
+    max-height:55dvh!important;
+  }
+  .childhood-page figcaption{
+    padding:12px 8px 0!important;
+  }
+  .childhood-page figcaption p{
+    font-size:16px!important;
+    line-height:1.34!important;
+  }
+  .childhood-controls{
+    width:calc(100vw - 16px)!important;
+    bottom:max(8px,env(safe-area-inset-bottom))!important;
+    gap:8px!important;
+    padding:8px!important;
+    border-radius:18px!important;
+  }
+  .childhood-controls .childhood-nav{
+    min-height:52px!important;
+    padding:11px 8px!important;
+    font-size:13px!important;
+  }
+}
+@media(orientation:landscape) and (max-height:600px){
+  .childhood-album{
+    padding-top:48px!important;
+    padding-bottom:78px!important;
+  }
+  .childhood-page figure img{
+    max-height:43dvh!important;
+  }
+  .childhood-page figcaption{
+    padding-top:8px!important;
+  }
+  .childhood-page figcaption p{
+    margin-top:5px!important;
+    font-size:15px!important;
+  }
+  .childhood-controls .childhood-nav{
+    min-height:46px!important;
+  }
+}
