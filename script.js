@@ -1069,18 +1069,42 @@ function getSevvalUniqueReward(){
  const discovered=new Set(JSON.parse(localStorage.getItem('sevvalDiscoveries')||'[]')); discovered.delete('vault');
  const update=()=>{const number=document.querySelector('#discoveryNumber'),bar=document.querySelector('#discoveryBar');if(number)number.textContent=discovered.size;if(bar)bar.style.width=(discovered.size/8*100)+'%';localStorage.setItem('sevvalDiscoveries',JSON.stringify([...discovered]))};
  const mark=x=>{discovered.add(x);update();navigator.vibrate?.(20)}; update();
+ let envelopeSessionActive=false,envelopePausedPageAudio=[];
+ const pauseEnvelopeBackground=()=>{
+  if(envelopeSessionActive)return;
+  envelopeSessionActive=true;
+  envelopePausedPageAudio=[document.querySelector('#audio'),document.querySelector('#sleepMemorySong')].filter(a=>a&&!a.paused&&!a.ended);
+  envelopePausedPageAudio.forEach(a=>a.pause());
+ };
+ const resumeEnvelopeBackground=()=>{
+  if(!envelopeSessionActive)return;
+  envelopeSessionActive=false;
+  const resume=[...envelopePausedPageAudio];
+  envelopePausedPageAudio=[];
+  resume.forEach(a=>a.play().catch(()=>{}));
+ };
  const show=html=>{content.innerHTML=html;modal.classList.add('show');modal.setAttribute('aria-hidden','false');document.body.style.overflow='hidden'};
- const hide=()=>{modal.classList.remove('show');modal.setAttribute('aria-hidden','true');document.body.style.overflow=''};close.onclick=hide;modal.onclick=e=>{if(e.target===modal)hide()};
+ const hide=()=>{
+  if(typeof stopEnvelopeVoice==='function')stopEnvelopeVoice();
+  if(typeof stopDictionaryVoice==='function')stopDictionaryVoice();
+  resumeEnvelopeBackground();
+  modal.classList.remove('show');modal.setAttribute('aria-hidden','true');document.body.style.overflow='';
+ };close.onclick=hide;modal.onclick=e=>{if(e.target===modal)hide()};
  const msgs=[
  'Bugün de çok güzelsin biliyor musun? 🌸','Gülüşün hâlâ en sevdiğim şey.','Sana sarılmayı gerçekten çok isterdim.','İyi ki hayatıma girdin güzelim.','Seni düşünmek günümün en güzel alışkanlığı.','Seninle konuşunca dünya biraz daha sakinleşiyor.','Gözlerinin içindeki o ışığı çok seviyorum.','Bazen sadece adını görmek bile gülümsetiyor.','Sen benim en güzel iyi kimsin.','Yüzündeki gülümseme hiç eksilmesin.','Kalbin, güzelliğinden bile daha güzel.','Sana her baktığımda yeniden hayran oluyorum.','Sen olduğun için çok özelsin.','Bana hissettirdiğin her şey için teşekkür ederim.','Mesafeler seni sevmeme engel değil.','Bir gün sana bütün bu cümleleri yüzüne söyleyeceğim.','Senin mutluluğun benim için gerçekten önemli.','En sıradan günümü bile güzelleştirebiliyorsun.','Kendine benim sana baktığım gibi bak: hayranlıkla.','İyi ki yollarımız kesişmiş.','Sesini duyduğum an içim huzur doluyor.','Sen benim şansımsın.','Seni tanımak hayatımın en güzel sürprizlerinden biri.','Güzel yüzün hep gülsün yavrum.','Varlığın bile bana iyi geliyor.','Dünyanın en tatlı insanına bakıyorsun şu an.','Seninle yaşayacağımız daha çok güzel an var.','Bazen seni ne kadar sevdiğimi kelimeler yetmiyor.','Sen benim kalbimin en güzel köşesindesin.','Bugün kendinle gurur duymayı unutma.','Her halinle çok güzelsin.','Sana kavuşacağımız günleri düşünüyorum.','Bir fotoğrafın bütün günümü değiştirebiliyor.','Benim için her zaman çok değerlisin.','Yanında olamasam da kalbim hep yanında.','İyi ki doğdun, iyi ki varsın.','Seninle konuşmak evime dönmek gibi.','Gülüşünü korumak isterdim.','Senin varlığın hayatımı güzelleştirdi.','Bu uygulamadaki her detayda biraz sevgim var.'
  ]; let queue=[]; const next=()=>{if(!queue.length)queue=[...msgs].sort(()=>Math.random()-.5);return queue.pop()};
  document.querySelector('#saySomething').onclick=()=>{mark('say');show('<h3 class="sheet-title">Sana Sığdıramadığım Kelimelerim</h3><p class="sheet-sub">Her dokunuşta Furkan’dan başka bir cümle</p><div class="say-card"><p id="sayText">'+next()+'</p><button id="sayAgain">Bir tane daha ♡</button></div>');document.querySelector('#sayAgain').onclick=()=>{document.querySelector('#sayText').animate([{opacity:0,transform:'translateY(8px)'},{opacity:1,transform:'none'}],{duration:350});document.querySelector('#sayText').textContent=next();navigator.vibrate?.(10)}};
  const letters={
- first:{title:'İlk Bunu Aç',icon:'01',text:'Bugün sıradan bir gün değil yavrum. Bugün senin dünyaya geldiğin gün... Bu yüzden bu küçük sürprizin ilk zarfında sana sadece şunu söylemek istiyorum: İyi ki doğdun, iyi ki varsın ve iyi ki hayatımdasın. Bugün yüzündeki gülümsemenin hiç eksilmemesini istiyorum.'},
- wish:{title:'Doğum Günü Dileğin',icon:'02',text:'Mumlarını üflerken tuttuğun dileği bana söylemek zorunda değilsin. Ama ben senin için bir dilek tuttum: Yeni yaşında kalbinin istediği güzellikler seni bulsun, huzurun çoğalsın ve kendini her gün biraz daha özel hissedesin. Çünkü sen bütün güzel şeyleri hak ediyorsun.'},
- secret:{title:'Sürprizin Sırrı',icon:'03',text:'Bu uygulamadaki her yazıyı, her fotoğrafı ve her küçük ayrıntıyı seni düşünerek hazırladım. Amacım sadece bir doğum günü mesajı vermek değildi; sana benim gözümde ne kadar özel, ne kadar iyi kalpli ve ne kadar değerli biri olduğunu göstermekti. Çünkü sen benim için gerçekten çok özelsin. Sana bunların çok daha fazlasını yapmayı isterdim. Bu uygulama, sana hissettiklerimin yanında belki de çok küçük kalıyor ama içinde sana olan sevgim, emeğim ve tüm kalbim var.'},
- beginning:{title:'En Son Bunu Aç',icon:'04',text:'Eğer bu zarfı açtıysan buraya kadar benimle geldin demektir. Ama sana küçük bir sır vereyim... Aslında daha yeni başlıyoruz. Bundan sonra seni bekleyen daha birçok küçük sürpriz var. Umarım her birinde yüzünde ayrı bir gülümseme oluşur. Hazırsan devam edelim yavrum... 💙'}
+ first:{title:'İlk Bunu Aç',icon:'01',audio:'assets/zarf1.m4a',text:'Bugün sıradan bir gün değil yavrum. Bugün senin dünyaya geldiğin gün... Bu yüzden bu küçük sürprizin ilk zarfında sana sadece şunu söylemek istiyorum: İyi ki doğdun, iyi ki varsın ve iyi ki hayatımdasın. Bugün yüzündeki gülümsemenin hiç eksilmemesini istiyorum.'},
+ wish:{title:'Doğum Günü Dileğin',icon:'02',audio:'assets/zarf2.m4a',text:'Mumlarını üflerken tuttuğun dileği bana söylemek zorunda değilsin. Ama ben senin için bir dilek tuttum: Yeni yaşında kalbinin istediği güzellikler seni bulsun, huzurun çoğalsın ve kendini her gün biraz daha özel hissedesin. Çünkü sen bütün güzel şeyleri hak ediyorsun.'},
+ secret:{title:'Sürprizin Sırrı',icon:'03',audio:'assets/zarf3.m4a',text:'Bu uygulamadaki her yazıyı, her fotoğrafı ve her küçük ayrıntıyı seni düşünerek hazırladım. Amacım sadece bir doğum günü mesajı vermek değildi; sana benim gözümde ne kadar özel, ne kadar iyi kalpli ve ne kadar değerli biri olduğunu göstermekti. Çünkü sen benim için gerçekten çok özelsin. Sana bunların çok daha fazlasını yapmayı isterdim. Bu uygulama, sana hissettiklerimin yanında belki de çok küçük kalıyor ama içinde sana olan sevgim, emeğim ve tüm kalbim var.'},
+ beginning:{title:'En Son Bunu Aç',icon:'04',audio:'assets/zarf4.m4a',text:'Eğer bu zarfı açtıysan buraya kadar benimle geldin demektir. Ama sana küçük bir sır vereyim... Aslında daha yeni başlıyoruz. Bundan sonra seni bekleyen daha birçok küçük sürpriz var. Umarım her birinde yüzünde ayrı bir gülümseme oluşur. Hazırsan devam edelim yavrum... 💙'}
  };
+ let envelopeVoice=null;
+ const stopEnvelopeVoice=()=>{if(envelopeVoice){envelopeVoice.pause();envelopeVoice.currentTime=0;envelopeVoice=null}};
+ let dictionaryVoice=null;
+ const stopDictionaryVoice=()=>{if(dictionaryVoice){dictionaryVoice.pause();dictionaryVoice.currentTime=0;dictionaryVoice=null}};
+ const playDictionaryVoice=src=>{stopDictionaryVoice();dictionaryVoice=new Audio(src);dictionaryVoice.preload='auto';dictionaryVoice.play().catch(()=>{})};
  const openedLetters=new Set(JSON.parse(localStorage.getItem('sevvalOpenedLetters')||'[]'));
  const saveOpened=()=>localStorage.setItem('sevvalOpenedLetters',JSON.stringify([...openedLetters]));
  const renderEnvelopeLobby=()=>{
@@ -1089,14 +1113,23 @@ function getSevvalUniqueReward(){
  };
  const openLetter=(key,btn)=>{
  const l=letters[key];
+ stopEnvelopeVoice();
+ envelopeVoice=new Audio(l.audio);
+ envelopeVoice.preload='auto';
+ envelopeVoice.play().catch(()=>{});
  btn.classList.add('breaking'); navigator.vibrate?.([35,35,55]);
  setTimeout(()=>{
   openedLetters.add(key);saveOpened();
-  content.innerHTML='<div class="opened-letter-wrap"><div class="opened-envelope" aria-hidden="true"><span class="opened-flap"></span><span class="opened-pocket"></span><span class="broken-seal">F♡Ş</span></div><article class="lux-letter"><div class="letter-corners" aria-hidden="true">✦</div><div class="letter-flower">⚜</div><small>28 AĞUSTOS · ŞEVVAL&#39;E</small><h3>'+l.title+'</h3><div class="letter-rule"><span></span><i>♡</i><span></span></div><p>'+l.text+'</p><div class="letter-sign"><span>Tüm kalbimle...</span><b>Furkan</b></div><button id="backLetters">← Diğer zarflara dön</button></article></div>';
-  document.querySelector('#backLetters').onclick=renderEnvelopeLobby;
+  content.innerHTML='<div class="opened-letter-wrap"><div class="opened-envelope" aria-hidden="true"><span class="opened-flap"></span><span class="opened-pocket"></span><span class="broken-seal">F♡Ş</span></div><article class="lux-letter"><div class="letter-corners" aria-hidden="true">✦</div><div class="letter-flower">⚜</div><small>28 AĞUSTOS · ŞEVVAL&#39;E</small><h3>'+l.title+'</h3><div class="letter-rule"><span></span><i>♡</i><span></span></div><p>'+l.text+'</p><div class="letter-sign"><span>Tüm kalbimle...</span><b>Furkan</b></div><div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:0 auto 10px"><button id="envelopeVoicePause" type="button">⏸ Sesimi duraklat</button><button id="voiceReplay" type="button">↻ Baştan dinle</button></div><button id="backLetters">← Diğer zarflara dön</button></article></div>';
+  const envelopePauseBtn=document.querySelector('#envelopeVoicePause');
+  const syncEnvelopePauseButton=()=>{if(!envelopeVoice){envelopePauseBtn.textContent='▶ Sesimi dinle';return}envelopePauseBtn.textContent=envelopeVoice.paused&&!envelopeVoice.ended?'▶ Sesime devam et':envelopeVoice.ended?'▶ Tekrar oynat':'⏸ Sesimi duraklat'};
+  envelopePauseBtn.onclick=()=>{if(!envelopeVoice){envelopeVoice=new Audio(l.audio);envelopeVoice.play().catch(()=>{});syncEnvelopePauseButton();return}if(envelopeVoice.ended){envelopeVoice.currentTime=0;envelopeVoice.play().catch(()=>{});}else if(envelopeVoice.paused){envelopeVoice.play().catch(()=>{});}else{envelopeVoice.pause();}syncEnvelopePauseButton()};
+  document.querySelector('#voiceReplay').onclick=()=>{stopEnvelopeVoice();envelopeVoice=new Audio(l.audio);envelopeVoice.preload='auto';envelopeVoice.addEventListener('play',syncEnvelopePauseButton);envelopeVoice.addEventListener('pause',syncEnvelopePauseButton);envelopeVoice.addEventListener('ended',syncEnvelopePauseButton);envelopeVoice.play().catch(()=>{});syncEnvelopePauseButton()};
+  if(envelopeVoice){envelopeVoice.addEventListener('play',syncEnvelopePauseButton);envelopeVoice.addEventListener('pause',syncEnvelopePauseButton);envelopeVoice.addEventListener('ended',syncEnvelopePauseButton);syncEnvelopePauseButton()}
+  document.querySelector('#backLetters').onclick=()=>{stopEnvelopeVoice();renderEnvelopeLobby()};
  },720);
  };
- document.querySelector('#openEnvelopes').onclick=()=>{mark('letters');show('');renderEnvelopeLobby()};
+ document.querySelector('#openEnvelopes').onclick=()=>{mark('letters');pauseEnvelopeBackground();show('');renderEnvelopeLobby()};
  const rewardPhotos=[
  {photo:'assets/photos/09-beyaz.webp',message:'Bu fotoğrafındaki güzelliğin çok sade ama bir o kadar da etkileyici. 🤍'},
  {photo:'assets/photos/13-pembe-elbise.webp',message:'Bu karedeki tatlılığın insanın yüzünü istemeden güldürüyor. 🌸'},
@@ -1277,24 +1310,49 @@ function getSevvalUniqueReward(){
  content.querySelectorAll('.flower-choice').forEach(btn=>btn.addEventListener('click',()=>{if(count>=5)return;count++;btn.classList.add('selected');const f=document.createElement('span');f.className='picked-flower';f.textContent=btn.dataset.f;f.style.marginLeft=((count-3)*24)+'px';f.style.transform=`translateX(-50%) rotate(${(count-3)*9}deg)`;f.style.zIndex=10-count;vase.appendChild(f);document.querySelector('#bouquetStatus').textContent=`${count} / 5 çiçek seçildi`;navigator.vibrate?.(15);if(count===5){mark('bouquet');document.querySelector('#bouquetStatus').textContent='Buket hazır: Bu buket senin 🤍';setTimeout(()=>reward('Hazırladığın buket kadar güzelsin','💐'),900)}}));
  });
 
- document.querySelector('#cleanPolaroid')?.addEventListener('click',()=>{
- const words=[
-  ['Yavrum','Bazı kelimeler zamanla bir insana ait olmaya başlıyor. “Yavrum” da benim için öyle oldu. Önceden sadece güzel bir hitaptı belki ama sana söyledikçe anlamı değişti, seninle özdeşleşti. Çünkü bu kelimenin içinde sana karşı hissettiğim o tarif etmesi zor yakınlık var; seni merak etmek, iyi olduğunu bilmek istemek, üzgün olduğunda içimin rahat etmemesi, mutlu olduğunda ben de mutlu olmak gibi. Bir de senin benden en çok bu kelimeyi duymayı sevmen var. Belki bu yüzden sana “yavrum” demek diğer bütün hitaplardan biraz daha farklı hissettiriyor. Bazen sevgimi uzun uzun anlatmak yerine tek bir “yavrum” demek yetiyor sanki. Çünkü sen onun içinde söylemediğim şeyleri bile anlayabiliyorsun. Benim için “yavrum”; sana olan sevgimin, şefkatimin ve seni kendime ne kadar yakın hissettiğimin tek kelimelik hâli.'],
-  ['Bebeğim','Bazı insanları hayatında bir yere koyarsın, bazılarını ise gerçekten kendinden biri gibi görmeye başlarsın. Sana “bebeğim” demem biraz bundan. İçimden sana böyle seslenmek geldiğinde aslında farkında olmadan seni ne kadar kendime yakın gördüğümü de söylüyorum. Bazen bir fotoğrafını gördüğümde içimden “benim bebeğim ya” demek geliyor, bazen yaptığın küçücük bir şeye bakıp aynı şeyi düşünüyorum. Bunun için özel bir an ya da sebep de gerekmiyor. “Bebeğim” benim için, seni kendimden biri gibi gördüğümde ve sana karşı içimde oluşan o tatlı sahiplenme hissini başka türlü anlatamadığımda kullandığım kelime.'],
-  ['Kelebeğim','Sen, sana güzel bir şey söylediğimde karnında kelebekler uçuştuğunu söylerdin. Bilmiyordun ama bunu her söylediğinde benim kalbimde de sana ait küçücük bir yer daha açılıyordu. Yüzündeki bir gülümsemeye, içinde küçücük bir heyecana sebep olabilmek bana kendimi dünyanın en özel insanı gibi hissettiriyordu. Bu yüzden sana “kelebeğim” dediğimde aklıma yalnızca bir hitap değil; sana dokunmadan bile kalbine güzel bir şey hissettirebildiğim o anlar geliyor.'],
-  ['Bitanem','Dünyada milyarlarca insan var ama bazı insanların yeri gerçekten bir tane oluyor. Ben sana “bitanem” derken tam olarak bunu kastediyorum. Seni başkalarından daha güzel olduğun için değil, sende bulduğum şeyleri başka hiç kimsede aramak istemediğim için bir tanem olarak görüyorum. Bazen küçücük bir hareketin, bazen söylediğin sıradan bir cümle, bazen de yalnızca orada olduğunu bilmek bile günümün havasını değiştirebiliyor. Senin yerini özel yapan tek bir özelliğin yok; seni sen yapan bütün küçük şeylerin bir araya gelmesi. O yüzden benim sözlüğümde “bitanem”, gerçekten yeri yalnızca sana ait olan kişi demek.'],
-  ['Çiçeğim','Çiçekleri güzel yapan yalnızca nasıl göründükleri değildir; insana hissettirdikleri, baktığında içine bıraktıkları o güzel histir. Benim sana “çiçeğim” dememin sebebi de biraz böyle. Bazen bir mesajınla yüzümü güldürmen, bazen küçücük bir şeyle içimi ısıtman, bazen de yalnızca seni düşünmenin bile bana iyi gelmesi… Hepsi bu kelimenin içinde saklı. Bir çiçeğe nasıl incitmeden dokunmak, solmasın diye özen göstermek istersen; ben de senin kalbine hep öyle yaklaşmak istedim. Çünkü benim için sen, yalnızca güzel olduğun için çiçeğim değilsin; değer verdiğim, incitmekten korktuğum ve hep güzel kalmasını istediğim o özel yanınla benim çiçeğimsin.'],
-  ['Güzelim','Sana “güzelim” dediğimde yalnızca yüzünden, gözlerinden ya da gülüşünden bahsetmiyorum. Elbette seni güzel buluyorum ama benim gördüğüm güzellik bundan çok daha fazlası. Bazen bir şeye çocuk gibi sevindiğinde, bazen farkında olmadan tatlı bir şey söylediğinde, bazen de kimsenin görmediğini düşündüğün küçücük davranışlarında ortaya çıkıyor. Seni tanıdıkça “güzel” kelimesinin benim için anlamı değişti. Artık bu kelimeyi duyduğumda yalnızca güzel bir yüz değil; huylarıyla, gülüşüyle, , kısacası olduğu hâliyle sevdiğim bir insan geliyor aklıma. Bu yüzden “güzelim” dediğimde aslında sana “ben seni yalnızca gözlerimle değil, tanıdığım her hâlinle güzel buluyorum” diyorum.'],
-  ['Biz','Aynı anda aynı şeyi düşünüp aynı cümleyi kurduğumuzda, daha söylemeden birbirimizin ne diyeceğini tahmin ettiğimizde ve kimsenin anlamayacağı küçücük şeylere birlikte güldüğümüzde birbirimize ne kadar alıştığımızı hatırlatan kelime. Bazen uzaklaştık, bazen yollarımızın ayrıldığını düşündük, hatta bazı anlarda her şeyin gerçekten bittiğine inandık. Ama ne kadar uzaklaşmayı denesek de birbirimizi tamamen hayatımızdan çıkaramadık; bir şekilde aklımız da kalbimiz de yeniden birbirine döndü. Belki de bizi “biz” yapan şey yalnızca birlikte geçirdiğimiz güzel zamanlar değil, ayrı kaldığımızda bile birbirimize giden yolu unutmamamızdı. İçinde tanışmamızı, alışmamızı, özlememizi, uzaklaşmamızı ve bütün bunlara rağmen birbirimizden tam anlamıyla kopamayışımızı taşıyan küçücük ama bizim için kocaman bir kelime: Biz.']
- ];
- show(`<div class="emotion-sheet dictionary-sheet"><small class="emotion-sheet-kicker">YALNIZCA BİZE AİT</small><h3>Bizim küçük<br><em>sözlüğümüz.</em></h3><p class="emotion-sheet-lead">Bazı kelimelerin anlamını sözlükler değil, birlikte yaşadıklarımız yazar.</p><div class="dictionary-tabs">${words.map((w,i)=>`<button type="button" data-word="${i}"><span>0${i+1}</span>${w[0]}</button>`).join('')}</div><div class="dictionary-meaning" id="dictionaryMeaning"><small>BİR KELİMEYE DOKUN</small><p>Bizde saklı olan anlamını oku.</p></div></div>`);
- const meaning=document.querySelector('#dictionaryMeaning'),seen=new Set();
- document.querySelectorAll('[data-word]').forEach(btn=>btn.onclick=()=>{
-  const i=Number(btn.dataset.word);seen.add(i);document.querySelectorAll('[data-word]').forEach(x=>x.classList.toggle('is-active',x===btn));btn.classList.add('is-seen');
-  meaning.classList.remove('is-changing');void meaning.offsetWidth;meaning.classList.add('is-changing');meaning.innerHTML=`<small>BİZİM SÖZLÜĞÜMÜZDE</small><strong>${words[i][0]}</strong><p>${words[i][1]}</p>`;navigator.vibrate?.(18);
-  if(seen.size===words.length){mark('clean');meaning.classList.add('is-complete')}
- });
- });
+ const cleanPolaroidBtn=document.querySelector('#cleanPolaroid');
+ if(cleanPolaroidBtn)cleanPolaroidBtn.onclick=()=>{
+  pauseEnvelopeBackground();
+  stopDictionaryVoice();
+  const words=[
+   ['Yavrum','Bazı kelimeler zamanla bir insana ait olmaya başlıyor. “Yavrum” da benim için öyle oldu. Önceden sadece güzel bir hitaptı belki ama sana söyledikçe anlamı değişti, seninle özdeşleşti. Çünkü bu kelimenin içinde sana karşı hissettiğim o tarif etmesi zor yakınlık var; seni merak etmek, iyi olduğunu bilmek istemek, üzgün olduğunda içimin rahat etmemesi, mutlu olduğunda ben de mutlu olmak gibi. Bir de senin benden en çok bu kelimeyi duymayı sevmen var. Belki bu yüzden sana “yavrum” demek diğer bütün hitaplardan biraz daha farklı hissettiriyor. Bazen sevgimi uzun uzun anlatmak yerine tek bir “yavrum” demek yetiyor sanki. Çünkü sen onun içinde söylemediğim şeyleri bile anlayabiliyorsun. Benim için “yavrum”; sana olan sevgimin, şefkatimin ve seni kendime ne kadar yakın hissettiğimin tek kelimelik hâli.','assets/sozluk-yavrum.m4a'],
+   ['Bebeğim','Bazı insanları hayatında bir yere koyarsın, bazılarını ise gerçekten kendinden biri gibi görmeye başlarsın. Sana “bebeğim” demem biraz bundan. İçimden sana böyle seslenmek geldiğinde aslında farkında olmadan seni ne kadar kendime yakın gördüğümü de söylüyorum. Bazen bir fotoğrafını gördüğümde içimden “benim bebeğim ya” demek geliyor, bazen yaptığın küçücük bir şeye bakıp aynı şeyi düşünüyorum. Bunun için özel bir an ya da sebep de gerekmiyor. “Bebeğim” benim için, seni kendimden biri gibi gördüğümde ve sana karşı içimde oluşan o tatlı sahiplenme hissini başka türlü anlatamadığımda kullandığım kelime.','assets/sozluk-bebegim.m4a'],
+   ['Kelebeğim','Sen, sana güzel bir şey söylediğimde karnında kelebekler uçuştuğunu söylerdin. Bilmiyordun ama bunu her söylediğinde benim kalbimde de sana ait küçücük bir yer daha açılıyordu. Yüzündeki bir gülümsemeye, içinde küçücük bir heyecana sebep olabilmek bana kendimi dünyanın en özel insanı gibi hissettiriyordu. Bu yüzden sana “kelebeğim” dediğimde aklıma yalnızca bir hitap değil; sana dokunmadan bile kalbine güzel bir şey hissettirebildiğim o anlar geliyor.','assets/sozluk-kelebegim.m4a'],
+   ['Bitanem','Dünyada milyarlarca insan var ama bazı insanların yeri gerçekten bir tane oluyor. Ben sana “bitanem” derken tam olarak bunu kastediyorum. Seni başkalarından daha güzel olduğun için değil, sende bulduğum şeyleri başka hiç kimsede aramak istemediğim için bir tanem olarak görüyorum. Bazen küçücük bir hareketin, bazen söylediğin sıradan bir cümle, bazen de yalnızca orada olduğunu bilmek bile günümün havasını değiştirebiliyor. Senin yerini özel yapan tek bir özelliğin yok; seni sen yapan bütün küçük şeylerin bir araya gelmesi. O yüzden benim sözlüğümde “bitanem”, gerçekten yeri yalnızca sana ait olan kişi demek.','assets/sozluk-bitanem.m4a'],
+   ['Çiçeğim','Çiçekleri güzel yapan yalnızca nasıl göründükleri değildir; insana hissettirdikleri, baktığında içine bıraktıkları o güzel histir. Benim sana “çiçeğim” dememin sebebi de biraz böyle. Bazen bir mesajınla yüzümü güldürmen, bazen küçücük bir şeyle içimi ısıtman, bazen de yalnızca seni düşünmenin bile bana iyi gelmesi… Hepsi bu kelimenin içinde saklı. Bir çiçeğe nasıl incitmeden dokunmak, solmasın diye özen göstermek istersen; ben de senin kalbine hep öyle yaklaşmak istedim. Çünkü benim için sen, yalnızca güzel olduğun için çiçeğim değilsin; değer verdiğim, incitmekten korktuğum ve hep güzel kalmasını istediğim o özel yanınla benim çiçeğimsin.','assets/sozluk-cicegim.m4a'],
+   ['Güzelim','Sana “güzelim” dediğimde yalnızca yüzünden, gözlerinden ya da gülüşünden bahsetmiyorum. Elbette seni güzel buluyorum ama benim gördüğüm güzellik bundan çok daha fazlası. Bazen bir şeye çocuk gibi sevindiğinde, bazen farkında olmadan tatlı bir şey söylediğinde, bazen de kimsenin görmediğini düşündüğün küçücük davranışlarında ortaya çıkıyor. Seni tanıdıkça “güzel” kelimesinin benim için anlamı değişti. Artık bu kelimeyi duyduğumda yalnızca güzel bir yüz değil; huylarıyla, gülüşüyle, kısacası olduğu hâliyle sevdiğim bir insan geliyor aklıma. Bu yüzden “güzelim” dediğimde aslında sana “ben seni yalnızca gözlerimle değil, tanıdığım her hâlinle güzel buluyorum” diyorum.','assets/sozluk-guzelim.m4a'],
+   ['Biz','Aynı anda aynı şeyi düşünüp aynı cümleyi kurduğumuzda, daha söylemeden birbirimizin ne diyeceğini tahmin ettiğimizde ve kimsenin anlamayacağı küçücük şeylere birlikte güldüğümüzde birbirimize ne kadar alıştığımızı hatırlatan kelime. Bazen uzaklaştık, bazen yollarımızın ayrıldığını düşündük, hatta bazı anlarda her şeyin gerçekten bittiğine inandık. Ama ne kadar uzaklaşmayı denesek de birbirimizi tamamen hayatımızdan çıkaramadık; bir şekilde aklımız da kalbimiz de yeniden birbirine döndü. Belki de bizi “biz” yapan şey yalnızca birlikte geçirdiğimiz güzel zamanlar değil, ayrı kaldığımızda bile birbirimize giden yolu unutmamamızdı. İçinde tanışmamızı, alışmamızı, özlememizi, uzaklaşmamızı ve bütün bunlara rağmen birbirimizden tam anlamıyla kopamayışımızı taşıyan küçücük ama bizim için kocaman bir kelime: Biz.','assets/sozluk-biz.m4a']
+  ];
+  show(`<div class="emotion-sheet dictionary-sheet"><small class="emotion-sheet-kicker">YALNIZCA BİZE AİT</small><h3>Bizim küçük<br><em>sözlüğümüz.</em></h3><p class="emotion-sheet-lead">Bazı kelimelerin anlamını sözlükler değil, birlikte yaşadıklarımız yazar.</p><div class="dictionary-tabs">${words.map((w,i)=>`<button type="button" data-word="${i}"><span>0${i+1}</span>${w[0]}</button>`).join('')}</div><div class="dictionary-meaning" id="dictionaryMeaning"><small>BİR KELİMEYE DOKUN</small><p>Bizde saklı olan anlamını oku.</p></div></div>`);
+  const meaning=document.querySelector('#dictionaryMeaning'),seen=new Set();
+  content.querySelectorAll('[data-word]').forEach(btn=>btn.addEventListener('click',()=>{
+   const i=Number(btn.dataset.word);
+   seen.add(i);
+   content.querySelectorAll('[data-word]').forEach(x=>x.classList.toggle('is-active',x===btn));
+   btn.classList.add('is-seen');
+   playDictionaryVoice(words[i][2]);
+   meaning.classList.remove('is-changing');void meaning.offsetWidth;meaning.classList.add('is-changing');
+   meaning.innerHTML=`<small>BİZİM SÖZLÜĞÜMÜZDE</small><strong>${words[i][0]}</strong><p>${words[i][1]}</p><div class="dictionary-audio-controls" style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:14px"><button id="dictionaryVoicePause" type="button">⏸ Sesimi duraklat</button><button id="dictionaryVoiceReplay" type="button">↻ Baştan dinle</button></div>`;
+   const pauseBtn=meaning.querySelector('#dictionaryVoicePause');
+   const replayBtn=meaning.querySelector('#dictionaryVoiceReplay');
+   const sync=()=>{
+    if(!dictionaryVoice){pauseBtn.textContent='▶ Sesimi dinle';return;}
+    if(dictionaryVoice.ended)pauseBtn.textContent='▶ Tekrar oynat';
+    else if(dictionaryVoice.paused)pauseBtn.textContent='▶ Sesime devam et';
+    else pauseBtn.textContent='⏸ Sesimi duraklat';
+   };
+   const bind=()=>{if(dictionaryVoice){dictionaryVoice.addEventListener('play',sync);dictionaryVoice.addEventListener('pause',sync);dictionaryVoice.addEventListener('ended',sync);}};
+   bind();sync();
+   pauseBtn.addEventListener('click',()=>{
+    if(!dictionaryVoice||dictionaryVoice.ended){playDictionaryVoice(words[i][2]);bind();sync();return;}
+    if(dictionaryVoice.paused)dictionaryVoice.play().catch(()=>{});else dictionaryVoice.pause();
+    sync();
+   });
+   replayBtn.addEventListener('click',()=>{playDictionaryVoice(words[i][2]);bind();sync();});
+   navigator.vibrate?.(18);
+   if(seen.size===words.length){mark('clean');meaning.classList.add('is-complete');}
+  }));
+ };
 
  document.querySelector('#messageHunt')?.addEventListener('click',()=>{
  show(`<h3 class="sheet-title">Mesaj Avı</h3><p class="sheet-sub">Bu küçük dünyada saklanan beş kalbi bul.</p><div class="hunt-stage" id="huntStage"><span class="hunt-decoration" style="left:12%;top:12%">✦</span><span class="hunt-decoration" style="right:15%;top:24%">❀</span><span class="hunt-decoration" style="left:18%;bottom:14%">☾</span><span class="hunt-decoration" style="right:14%;bottom:10%">✧</span></div><p class="hunt-status" id="huntStatus">0 / 5 kalp bulundu</p>`);

@@ -3859,3 +3859,23 @@ body.cinematic-photo-open{
     min-height:46px!important;
   }
 }
+
+/* Sözlük ses butonları — zarflardaki ses butonlarıyla aynı görünüm */
+.dictionary-audio-controls button{
+  border:0;
+  border-radius:999px;
+  padding:13px 22px;
+  background:linear-gradient(135deg,#274f98,#112d64);
+  color:#fff;
+  font-weight:700;
+  box-shadow:0 12px 26px rgba(15,43,96,.27);
+  cursor:pointer;
+  transition:transform .2s ease,filter .2s ease,box-shadow .2s ease;
+}
+.dictionary-audio-controls button:hover{
+  transform:translateY(-1px);
+  filter:brightness(1.08);
+}
+.dictionary-audio-controls button:active{
+  transform:translateY(0) scale(.98);
+}
